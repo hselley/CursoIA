@@ -1,0 +1,748 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Héctor Selley}
+\title{Introducción al aprendizaje automático}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+\institute{Universidad Anáhuac México} 
+\date{\today}
+%\subject{} 
+\begin{document}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+\begin{frame}<beamer>
+\frametitle{Outline}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	\tableofcontents
+\end{frame}
+
+\section{Preámbulo}
+\begin{frame}{Inteligencia artificial}\pause
+\begin{block}{}
+Combinación de algoritmos planteados con el propósito de crear máquinas que presenten las mismas capacidades que el ser humano.
+\end{block}\pause
+\begin{itemize}
+	\item En informática, la inteligencia expresada por máquinas, sus procesadores y su software, que serían los análogos al cuerpo, el cerebro y 
+		la mente, respectivamente, a diferencia de la inteligencia natural demostrada por humanos y ciertos animales con cerebros complejos.\pause
+	\item En ciencias de la computación, una máquina \textit{inteligente} ideal es un agente flexible que percibe su entorno y lleva a cabo acciones que 
+		maximicen sus posibilidades de éxito en algún objetivo o tarea.\pause
+	\item En 1956, John McCarthy acuñó la expresión \textit{inteligencia artificial}, y la definió como \textit{la ciencia e ingenio de hacer máquinas 
+		inteligentes, especialmente programas de cómputo inteligentes}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Machine Learning}
+\begin{itemize}
+	\item Creación de sistemas computarizados y algoritmos que permiten a las máquinas ``aprender'' de situaciones previas. \pause
+	\item Es una forma de la IA que permite a un sistema aprender de los datos en lugar de aprender mediante la programación explícita. \pause
+	\item Machine learning no es un proceso sencillo.\pause
+	\item Conforme el algoritmo ingiere datos de entrenamiento, es posible producir modelos más precisos basados en datos. \pause
+	\item Un modelo de machine learning es la salida de información que se genera cuando entrena su algoritmo de machine learning con datos. \pause
+	\item Después del entrenamiento, al proporcionar un modelo con una entrada, se le dará una salida.\pause
+	\item Por ejemplo, un algoritmo predictivo creará un modelo predictivo. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Machine Learning$_2$}
+\begin{itemize}
+	\item Permite modelos a entrenar con conjuntos de datos antes de ser implementados. \pause
+	\item Algunos modelos de machine learning están online y son continuos. \pause
+	\item Después de que un modelo ha sido entrenado, se puede utilizar en tiempo real para aprender de los datos. \pause
+	\item Las mejoras en la precisión son el resultado del proceso de entrenamiento y la automatización que forman parte del machine learning.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Machine Learning$_3$}
+\begin{itemize}
+	\item ML consiste en extraer conocimiento de los datos. \pause
+	\item Es un área de estudio en la intersección de la estadística, inteligencia artificial y la ciencia de la computación.\pause
+	\item También se le conoce como análisis predictivo o aprendizaje estadístico. \pause
+	\item Los métodos de ML se han convertido en parte de la vida diaria, van desde recomendaciones automatizadas de películas, 
+		comida, productos, estaciones de radio en linea, vídeos e incluso el reconocimiento de personas en fotografías en redes sociales\pause
+	\item Al utilizar servicios como Amazon, Facebook, Netflix o Google (entre otros) se está utilizando también algún modelo de ML.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Machine Learning$_4$}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.45]{../Programacion para ML/Contenido/img/AI-ML.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Porque usar Machine Learning?}
+\begin{itemize}
+	\item Es necesario utilizar Machine Learning para que la toma de decisiones sea más rápida.\pause
+	\item El paradigma ML utiliza datos y resultados esperados (si los hay) y emplea la computadora para construir un programa, que se 
+		conoce como \textbf{modelo}.\pause
+	\item Este modelo puede ser utilizado para la toma de decisiones y obtener resultados para nuevas entradas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Modelo de ML}
+Para construir un modelo de ML, se deben seguir los siguientes pasos:\pause
+\begin{itemize}
+	\item Obtener datos o registros (suficientes) para conocer la historia en ellos y almacenarlos en algún medio apropiado 
+		(bases de datos, registros, archivos de texto plano, CSV, etc). \pause
+	\item Elegir atributos clave en los datos que puedan ser útiles para la construcción del modelo. \pause
+	\item Observar y capturar los atributos y su comportamiento durante varios períodos de tiempo, lo que incluye el comportamiento normal y anómalo. \pause
+		Estos resultados serían las salidas y los datos las entradas.\pause
+	\item Alimentar algún algoritmo de ML con este conjunto de entradas y salidas, construir un modelo que aprenda los patrones inherentes 
+		y observar el producto o resultado correspondiente.\pause
+	\item Implementar este modelo de modo que, para nuevos datos, pueda predecir si el comportamiento es normal o anómalo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Definición Formal de Machine Learning}
+\begin{itemize}
+	\item Para definir Machine Learning es necesario volver al inicio, a las bases definidas por el renombrado profesor Tom Mitchell en 
+		1997\footnote{Científico computacional estadounidense y profesor en la Universidad E. Fredkin en la Universidad Carnegie Mellon (CMU) 
+		\url{https://en.wikipedia.org/wiki/Tom_M._Mitchell}}.\pause
+	\item  La idea de Machine Learning es que un algoritmo de aprendizaje ayudará a aprender a partir de los datos. \pause
+	\item El profesor Mitchell lo define de la siguiente forma:\pause
+\end{itemize}
+\begin{block}{}
+\textit{"
+Se dice que un programa computacional aprende desde la experiencia \textbf{E} con respecto a una clase de tareas \textbf{T} y una medida de desempeño \textbf{P}, 
+si su desempeño en llevar a cabo las tareas \textbf{T}, medido por \textbf{P}, mejora con la experiencia \textbf{E}.
+"}
+\end{block}
+\end{frame}
+
+\begin{frame}{Definición Formal de Machine Learning}
+Los parámetros T, P y E son los componentes principales de cualquier algoritmo de aprendizaje:\pause
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{../Programacion para ML/Contenido/img/TPE.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Definición Formal de Machine Learning}
+Se puede simplificar la definición de la siguiente manera, Machine Learning es la disciplina que consiste en algoritmos de aprendizaje que:\pause
+\begin{itemize}
+	\item Mejoren el desempeño \textit{P}\pause
+	\item Al ejecutar una tarea \textit{T}\pause
+	\item A través del tiempo con la experiencia \textit{E}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Definición de la tarea \textit{T}}
+\begin{itemize}
+	\item La tarea \textit{T} es básicamente el problema del mundo real a resolver, puede ser desde encontrar la mejor estrategia de marketing 
+		hasta predecir fallas estructurales.\pause
+	\item Lo más recomendable es definir la tarea de la forma más concreta posible.\pause
+ 	\item Las tareas basadas en ML son difíciles de resolver mediante la programación convencional y el enfoque tradicional.\pause
+	\item Una tarea \textit{T} generalmente se puede definir como una tarea de aprendizaje automático en función del proceso o flujo de trabajo 
+		que el sistema debe seguir para operar con datos puntuales o muestras. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Definición de la tarea \textit{T}}
+La siguiente lista muestra algunas tareas comunes:
+\begin{description}
+	\item[Clasificación o categorización.] Abarca la lista de tareas o problemas donde la maquina toma como entrada datos puntuales o muestras y asigna
+		una clase específica o categoría a cada muestra. \pause Un ejemplo sería clasificar animales a partir de imágenes.\pause
+	\item[Regresión.] Involucra realizar una predicción tal que para una entrada le corresponde como salida un valor numérico en lugar 
+		de una clase o categoría.\pause Por ejemplo, predecir los precios de la vivienda considerando el área del terreno, el número de pisos, baños y recámaras
+		como atributos de entrada para cada dato puntual.\pause
+	\item[Detección de anomalías. ] Implica analizar registros de eventos o transacciones y otros datos puntuales para encontrar anomalías,
+		patrones inusuales o eventos distintos a un comportamiento normal. \pause Por ejemplo, detección de ataques de denegación de servicio (DoS) o fraudes.
+\end{description}
+\end{frame}
+
+\begin{frame}{Definición de la tarea \textit{T}}
+\begin{description}
+	\item[Anotación estructurada. ] Implica realizar algún análisis en los datos puntuales de entrada y añadir anotaciones como metadatos estructurados. \pause
+		a los datos originales, donde las anotaciones representan información adicional e incluso relaciones entre los datos. \pause Por ejemplo, anotaciones de texto 
+		a algunas partes de un discurso, dichas anotaciones podrían ser correcciones gramaticales o sentimientos. \pause		
+	\item[Traducción. ] Las tareas de traducción automática suelen ser del tipo en el que si se tienen muestras de datos de entrada pertenecientes a un idioma específico, 
+		realizará la traducción del texto a ese idioma.\pause La traducción basada en lenguaje natural es definitivamente un área enorme que maneja una gran cantidad de datos
+		de texto.
+\end{description}
+\end{frame}
+
+\begin{frame}{Definición de la tarea \textit{T}}
+\begin{description}
+	\item[Agrupamiento o agrupación. ] Los clústeres o grupos se forman a partir de muestras de datos de entrada y haciendo que la máquina aprenda u observe 
+		patrones, relaciones o similitudes inherentes en los datos de entrada. Por lo general, no se tienen datos preetiquetados para estas tareas. \pause 
+		Por ejemplo agrupar productos, eventos y entidades similares.\pause
+	\item[Transcripciones. ] Estas tareas involucran tomar varias representaciones de datos, que son usualmente continuas y no estructuradas, y convertirlas en datos
+		discretos y estructurados.\pause Por ejemplo traducción de datos de voz a texto o reconocimiento de texto, entre otros.
+\end{description}
+\end{frame}
+
+\begin{frame}{Definición de la experiencia \textit{E}}
+\begin{itemize}
+	\item El proceso de consumir un conjunto de datos (muestras o datos puntuales) de manera que un algoritmo de aprendizaje o modelo aprenda patrones inherentes
+		se conoce como experiencia \textit{E}.\pause
+	\item Es posible alimentar el algoritmo con muestras de datos de una sola vez utilizando datos históricos o incluso proporcionar muestras de datos nuevos
+		cada vez que se adquieren.\pause
+	\item un modelo o algoritmo obtiene experiencia generalmente ocurre como un proceso iterativo, también conocido como \textbf{entrenamiento}. \pause
+	\item Se podría pensar en el modelo como una entidad tal como un ser humano que adquiere conocimiento o experiencia a través de la observación de datos y 
+		aprendiendo sobre varios atributos, relaciones y patrones presentes en los datos. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Definición del desempeño \textit{P}}
+\begin{itemize}
+	\item Supongamos que tenemos un algoritmo de Machine Learning que realiza una tarea \textit{T} y obtiene experiencia \textit{E} con datos puntuales 
+		durante un periodo de tiempo.\pause
+	\item Ahora se debe determinar si su desempeño es bueno o bien si está comportando correctamente, esto lo determinamos con el desempeño \textit{P}.\pause
+	\item El desempeño \textit{P} es una métrica o medida cuantitativa que se utiliza para determinar que tan bien funciona el algoritmo o modelo que está 
+		realizando la tarea \textit{T} con experiencia \textit{E}.\pause
+	\item Las medidas típicas de desempeño incluyen exactitud, precisión, recuperación, puntaje F1, sensibilidad, especificidad, tasa de error, tasa de 
+		clasificación errónea entre otras.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Definición del desempeño \textit{P}}
+\begin{itemize}
+	\item Las medidas de rendimiento generalmente se evalúan en un conjunto de datos de entrenamiento, así como otro conjunto no visto o aprendido antes, 
+		a esto se le conoce como muestras de datos de prueba y validación.\pause
+	\item La idea detrás de esto es generalizar el algoritmo para que haya un sesgo en el conjunto de entrenamiento y funcione bien en el futuro para otro 
+		conjunto de datos diferente.
+\end{itemize}
+\end{frame}
+  
+\begin{frame}{Campo multidisciplinario}
+Machine Learning es una sub-rama de la Inteligencia Artificial, sin embargo utiliza conceptos que se han derivado o utilizado desde otras áreas del conocimiento. 
+La figura  muestra las diversas áreas de conocimiento en las que se apoya el Machine Learning.\pause
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/ML-multi.png}
+\end{figure}
+\end{frame}	
+
+\begin{frame}{Inteligencia Artificial y Machine Learning}\pause
+
+\begin{itemize}
+	\item Machine Learning es una disciplina científica del campo de la Inteligencia Artificial\pause
+	\item Machine Learning crea sistemas que aprenden automáticamente en el tiempo \pause
+	\item ¿Qué es aprender en ML?\pause
+	\begin{itemize}
+		\item Usar algoritmos para construir modelos que revelan patrones en los datos a partir de su historia\pause
+		\item Se basa principalmente en el aprendizaje estadístico
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Inteligencia Artificial y Machine Learning$_2$}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.375]{../Programacion para ML/Contenido/img/AI-ML2.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Inteligencia Artificial y Machine Learning$_3$}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.375]{../Programacion para ML/Contenido/img/AI-ML3.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Métodos de Machine Learning}
+ML tiene múltiples algoritmos, técnicas y metodologías que se pueden utilizar para construir modelos para resolver problemas del mundo
+real utilizando datos.\pause Las siguientes son algunas de las principales áreas de los métodos de Machine Learning.\pause
+
+\begin{itemize}
+	\item Métodos basados en la cantidad de supervisión humana en el proceso de aprendizaje\pause
+		\begin{itemize}
+			\item Aprendizaje supervisado\pause
+			\item Aprendizaje no supervisado\pause
+			\item Aprendizaje semi-supervisado\pause
+			\item Aprendizaje por refuerzo
+		\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Métodos de Machine Learning}
+\begin{itemize}
+
+	\item Métodos basados en la habilidad de aprender desde un conjunto de datos incrementales\pause
+		\begin{itemize}
+			\item Aprendizaje por lotes\pause
+			\item Aprendizaje en línea\pause
+		\end{itemize}
+	\item Métodos basados en su enfoque de generalización a partir de un conjunto de datos\pause
+		\begin{itemize}
+			\item Aprendizaje basado en instancias\pause
+			\item Aprendizaje basado en modelos
+		\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Aprendizaje supervisado}
+\begin{frame}{Aprendizaje supervisado}
+\begin{itemize}
+	\item Los algoritmos o métodos de aprendizaje supervisado utilizan un conjunto de datos de entrada (conjunto de entrenamiento) y salidas 
+		asociadas a ellos (etiquetas) para cada una de las entradas durante el proceso de entrenamiento del modelo.\pause
+	\item Utilizan un conjunto de datos de entrada (conjunto de entrenamiento) y salidas asociadas a ellos (etiquetas) para cada una de las 
+		entradas durante el proceso de entrenamiento del modelo. \pause
+	\item El principal objetivo es aprender a asociar entre un conjunto de entradas $\textbf{x}$ y su salida correspondiente $\textbf{y}$ 
+		basado en el entrenamiento mediante múltiples instancias.\pause
+	\item El conocimiento adquirido puede ser utilizado en el futuro para predecir una salida $\textbf{y'}$ para nuevos datos de entrada $\textbf{x'}$. \pause
+	\item A este proceso se le llama \textbf{supervisado} dado que el modelo aprende de muestras en las que se conoce previamente su salida correspondiente.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aprendizaje supervisado}
+\begin{itemize}
+	\item El aprendizaje supervisado comienza típicamente con un conjunto establecido de datos y una cierta comprensión de cómo se clasifican estos datos. \pause
+	\item El aprendizaje supervisado tiene la intención de encontrar patrones en datos que se pueden aplicar a un proceso de analítica.\pause
+	\item Estos datos tienen características etiquetadas que definen el significado de los datos.\pause
+	\item Por ejemplo, se puede crear una aplicación de machine learning con base en imágenes y descripciones escritas que distinga entre millones de animales.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{../Programacion para ML/Contenido/img/supervisado.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Aprendizaje supervisado}
+\begin{itemize}
+	\item Aprender de datos que cuentan con una clasificación (etiquetas)\pause
+	\item Problemas de clasificación: reconocimiento en imágenes, diagnóstico médico, detección de fraudes y correo spam, procesamiento de 
+		lenguaje natural (NLP), biometría\pause
+	\item Problemas de regresión: optimización de procesos, predicciones financiaras, forecasting, crecimiento estimado de la población, 
+		impacto de mercadotecnia\pause
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.2]{../Programacion para ML/Contenido/img/ejemploSupervisado.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Tipos de aprendizaje supervisado}
+En los métodos de aprendizaje supervisado existen dos tipos principales de clases de tareas: \pause
+\begin{itemize}
+	\item Clasificación.\pause
+	\item Regresión.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Clasificación}
+\begin{itemize}
+	\item El principal objetivo es predecir etiquetas de salida que sean categóricas en su naturaleza para un conjunto de datos de entrada,
+		empleando un modelo que haya aprendido en la fase de entrenamiento.\pause
+	\item Las etiquetas de salida (clases) son naturalmente categóricas lo que significa que son valores discretos no ordenados. \pause
+	\item Por ejemplo, si se trata de predecir si el clima será soleado o lluvioso considerando como datos de entrada los atributos: humedad, temperatura, presión
+		atmosférica y precipitación.\pause
+	\item En este ejemplo sólo hay dos clases, esto es, un problema binario: soleado o lluvioso.
+\end{itemize}		
+\end{frame}
+
+\begin{frame}{Clasificación}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/ML-Supervisado-clasificacion.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Regresión}
+\begin{itemize}
+	\item Las tareas de ML en las cuales el principal objetivo es la estimación de un valor se les conoce como \textbf{regresiones}. \pause
+	\item Los métodos son entrenados con muestras de datos que tienen como salida valores numéricos continuos.\pause
+	\item Utilizan atributos de los datos de entrada (también llamados variables explicativas o independientes) y sus valores de 
+		salida numéricos continuos (también llamados variable de respuesta, dependiente o de resultado) para aprender relaciones 
+		y asociaciones entre las entradas y salidas. \pause 
+	\item Con este conocimiento, puede predecir respuestas de salida para instancias de datos nuevos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Regresión}
+Un ejemplo sencillo de regresión es la predicción del precio de una casa. Se puede construir un modelo de regresión para predecir los precios utilizando 
+datos relativos al área del terreno donde se encuentra la casa. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{../Programacion para ML/Contenido/img/ML-Supervisado-regresion.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Regresión}
+Algunos de los métodos de regresión son los siguientes:\pause
+\begin{itemize}
+	\item Regresión lineal simple\pause
+	\item Regresión múltiple o multivariable\pause
+	\item Regresión polinomial\pause
+	\item Regresión no lineal\pause
+	\item Regresión lazo (lasso)\pause
+	\item Regresión cresta (ridge)\pause
+	\item Modelos lineales generalizados			
+\end{itemize}
+\end{frame}
+
+
+\section{Aprendizaje no supervisado}
+\begin{frame}{Aprendizaje no supervisado}
+\begin{itemize}
+	\item Estos métodos se llaman no supervisados debido a que el modelo o algoritmo trata por sí solo de aprender estructuras, 
+		patrones o relaciones inherentes en los datos, sin ayuda alguna. \pause
+	\item Estos métodos son necesarios si no se cuentan con datos previamente etiquetados para el proceso de entrenamiento.\pause
+	\item El no supervisado se preocupa más por tratar de extraer conocimientos o información significativa de los datos que por intentar 
+		predecir algún resultado.\pause 
+	\item Hay más incertidumbre en los resultados del aprendizaje no supervisado, pero también puede obtener mucha información de estos 
+		modelos que no es fácil de determinar con solo mirar los datos sin procesar.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Tipos de Aprendizaje no supervisado}
+Los métodos de aprendizaje no supervisado se pueden clasificar en las siguientes áreas: \pause
+\begin{itemize}
+	\item Clustering.\pause
+	\item Reducción dimensional.\pause
+	\item Detección de anomalías.\pause
+	\item Reglas de asociación.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Clustering}
+\begin{itemize}
+	\item Son métodos de ML que tratan de encontrar patrones, similitud y relaciones entre los datos y separar estas muestras en diversos grupos.\pause
+	\item Estos métodos no están supervisados en absoluto porque intentan agrupar datos observando las características de los datos sin ningún 
+		tipo de capacitación, supervisión o conocimiento previo.\pause
+	\item Considere un problema del mundo real:
+		\begin{itemize}
+			\item Se tienen varios servidores en un centro de datos e intentar analizar los registros en busca de problemas o errores típicos.\pause
+			\item La tarea principal es determinar los distintos tipos de mensajes de registro que ocurren con frecuencia cada semana.\pause
+			\item Se desea agrupar los registros en varios grupos en función de características inherentes. \pause
+			\item Un enfoque simple sería extraer características de los registros y agruparlos en función de la similitud en el contenido. 
+		\end{itemize}		  
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Clustering}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/ML-NoSupervisado-clustering.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Clustering}
+Existen varios tipos de métodos de clustering que pueden ser clasificados de la siguiente forma:\pause
+\begin{itemize}
+	\item Métodos basados en centroides: K-media o K-mediana.\pause
+	\item Métodos de agrupamiento jerárquico como aglomerativo y divisivo (Ward o afinidad de propagación)\pause
+	\item Métodos de clustering basados en distribución (modelos de mezclas Gaussianas)\pause
+	\item Métodos basados en densidad
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reducción dimensional}
+\begin{itemize}
+	\item Una vez que se comienza a extraer atributos o características de los datos, algunas veces el espacio de
+		características se satura con una gran cantidad de atributos o características. \pause
+	\item Esto plantea múltiples desafíos, incluido el análisis y la visualización de datos con miles o millones de atributos, 
+		lo que hace que el espacio de características sea extremadamente complejo y presente problemas con respecto a los modelos de 
+		entrenamiento, la memoria y las limitaciones de espacio.\pause 
+	\item Esto se le llama la "\textbf{maldición de la dimensión}".\pause
+	\item Los métodos no supervisados se utilizan para reducir el número de atributos o características en los datos. \pause
+	\item Existen diversos algoritmos para la reducción dimensional, siendo los más comunes:\pause
+		\begin{itemize}
+			\item Análisis de Componentes Principales (PCA)\pause
+			\item Vecinos Cercanos.\pause
+			\item Análisis Lineal Discriminante (LDA).
+		\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reducción dimensional}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/ML-NoSupervisado-reduccionDimensional.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Detección de anomalías}
+\begin{itemize}
+	\item El proceso de detección de anomalías, también conocido como detección de \textit{outliers}, consiste en 
+		encontrar ocurrencias de eventos inusuales con respecto a un conjunto de datos. \pause
+	\item Se puede entrenar el algoritmo con un conjunto de datos que tiene muestras de datos normales sin anomalías.\pause 
+	\item Una vez completado el entrenamiento, el algoritmo podrá identificar un dato nuevo como anómalo o normal utilizando 
+		su conocimiento aprendido.\pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Detección de anomalías}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/ML-NoSupervisado-deteccionAnomalias.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Reglas de asociación}
+\begin{itemize}
+	\item Son un método de minería de datos que se usa para examinar y analizar grandes conjuntos de datos transaccionales para 
+		encontrar patrones y reglas de interés. \pause
+	\item Estos patrones representan relaciones y asociaciones interesantes, entre varios artículos a través de transacciones.\pause
+	\item Las reglas de asociación también se denomina a menudo análisis de cesta de la compra, que se utiliza para analizar los patrones 
+		de compra de los clientes.\pause
+	\item Las reglas de asociación ayudan a detectar y predecir patrones transaccionales en función del conocimiento que obtiene de las 
+		transacciones de entrenamiento.\pause
+	\item Con esta técnica, podemos responder preguntas como qué artículos tienden a comprar juntos las personas.\pause
+	\item También podemos asociar o correlacionar productos, por ejemplo, las personas que compran cerveza en un bar también tienden a 
+		comprar alitas de pollo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Reglas de asociación}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/ML-NoSupervisado-reglaAsociacion.png}
+\end{figure}	
+\end{frame}
+
+\section{Aprendizaje Semi-Supervisado}
+\begin{frame}{Aprendizaje Semi-Supervisado}
+\begin{itemize}
+	\item Se encuentran entre los métodos de aprendizaje supervisados y no supervisados.\pause
+	\item Suelen utilizar una gran cantidad de datos de entrenamiento que no están etiquetados (que forman el componente de aprendizaje no supervisado) 
+		y una pequeña cantidad de datos preetiquetados y anotados (que forman el componente de aprendizaje supervisado).\pause
+	\item Hay múltiples técnicas disponibles en forma de métodos generativos, métodos basados en grafos y métodos heurísticos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aprendizaje Semi-Supervisado}
+\begin{itemize}
+	\item Un enfoque simple sería construir un modelo supervisado basado en datos etiquetados, el cual es limitado, y luego aplicar lo mismo a grandes 
+		cantidades de datos no etiquetados para obtener más muestras etiquetadas, entrenar el modelo en ellas y repetir el proceso. \pause
+	\item Otro enfoque sería usar algoritmos no supervisados para agrupar muestras de datos similares, usar intervención humana para etiquetar estos grupos 
+		y luego usar una combinación de esta información en el futuro. Este enfoque se utiliza en sistemas de etiquetado de imágenes.
+\end{itemize}
+\end{frame}
+
+
+\section{Aprendizaje por refuerzo}
+\begin{frame}{Aprendizaje por refuerzo}
+\begin{itemize}
+	\item Los métodos de aprendizaje por refuerzo son un poco diferentes de los métodos convencionales supervisados o no supervisados.\pause
+	\item Tenemos un agente que queremos entrenar durante un período de tiempo para interactuar con un entorno específico y mejorar su rendimiento 
+		durante un período de tiempo con respecto al tipo de acciones que realiza sobre el entorno.\pause 
+	\item El agente comienza con un conjunto de estrategias o políticas para interactuar con el entorno.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aprendizaje por refuerzo}
+\begin{itemize}
+	\item El aprendizaje de refuerzo es un modelo de aprendizaje conductual.\pause
+	\item El algoritmo recibe retroalimentación del análisis de datos, conduciendo el usuario hacia el mejor resultado.\pause
+	\item El aprendizaje de refuerzo difiere de otros tipos de aprendizaje supervisado, porque el sistema no está entrenado con el 
+		conjunto de datos de ejemplo. Más bien, el sistema aprende a través de la prueba y el error.\pause
+	\item Por lo tanto, una secuencia de decisiones exitosas conduce al fortalecimiento del proceso, porque es el que resuelve el 
+		problema de manera más efectiva.
+\end{itemize}
+  \begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{../Programacion para ML/Contenido/img/refuerzo.png}
+	\caption{Aprendizaje por refuerzo}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{Aprendizaje por refuerzo}
+\begin{itemize}
+	\item Aprender a través de acciones, por lo regular de prueba y error, con el objetivo de maximizar una recompensa o minimizar una penalización. \pause
+	\item Recibe retroalimentación del ambiente\pause
+	\item Más cercano a metodologías de IA que a algoritmos de ML\pause
+	\item Videojuegos, robótica, teoría de juegos, agentes virtuales
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aprendizaje por refuerzo}
+Los pasos principales de un método de aprendizaje por refuerzo se mencionan a continuación:\pause
+\begin{enumerate}
+	\item Definir un agente con un conjunto inicial de políticas y estrategias.\pause
+	\item Observar el ambiente y el estado actual.\pause
+	\item Seleccionar la política óptima y realizar una acción correspondiente.\pause
+	\item Obtener la recompensa o penalización correspondiente.\pause
+	\item Actualizar las políticas o estrategias si es necesario.\pause
+	\item Repetir los pasos 2-5 hasta que el agente aprenda las políticas o estrategias óptimas.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Aprendizaje por refuerzo}
+\begin{itemize}
+	\item Un ejemplo de aprendizaje por refuerzo consiste en crear un programa que aprenda a jugar ajedrez.\pause
+	\item En ese ejemplo el agente sería el programa, el ambiente el tablero, y el estado sería las posiciones de las piezas en el tablero. \pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/ML-aprendizajeRefuerzo.png}
+\end{figure}	
+\end{frame}
+
+
+\section{Deep Learning}
+\begin{frame}{Deep Learning}
+\begin{itemize}
+	\item Es un método específico de machine learning que incorpora las redes neuronales en capas sucesivas para aprender de los datos de
+		manera iterativa.\pause
+	\item El deep learning es especialmente útil cuando se trata de aprender patrones de datos no estructurados.\pause
+	\item Las redes neuronales complejas de deep learning están diseñadas para emular cómo funciona el cerebro humano, así que las computadoras 
+		pueden ser entrenadas para lidiar con abstracciones y problemas mal definidos.\pause
+	\item Las redes neuronales y el deep learning se utilizan a menudo en el reconocimiento de imágenes, voz y aplicaciones de visión de computadora.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Deep Learning}
+\begin{itemize}
+	\item Las redes neuronales profundas tienen un enorme potencial para aprender funciones, patrones y representaciones no lineales complejas.\pause
+	\item Su poder está impulsando la investigación en múltiples campos, incluida la visión por computadora, el análisis audiovisual, los chatbots 
+		y la comprensión del lenguaje natural, por nombrar algunos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Deep Learning}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/AI-ML-DL.png}
+\end{figure}
+\end{frame}
+
+\section{Tipos de problemas que se resuelven con Machine Learning}
+\begin{frame}{Aplicaciones representativas de ML}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.22]{../Programacion para ML/Contenido/img/EjemplosML.png}
+\end{figure}
+\end{frame}
+
+\section{Diseño de un sistema de aprendizaje}
+\begin{frame}{Diseño de un sistema de aprendizaje}
+Considerese una estructura en la que se utilice la Big Data, Machine Learning y Cómputo en la nube para la solución de un problema.\pause
+
+\begin{itemize}
+	\item \textbf{Big Data}. Permite gestionar grandes volúmenes de información y procesarlos de forma ágil, incluso en tiempo real\pause
+	\item \textbf{Cómputo en la nube}. Brinda una infraestructura escalable \pause
+	\item \textbf{Machine Learning}. Aprovecha el volumen de información para detectar patrones y comportamientos más acertados
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Big Data + ML + Cómputo en la nube}
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.4]{../Programacion para ML/Contenido/img/BD+ML+CC.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Diseño de un sistema de aprendizaje}
+\begin{itemize}\pause
+	\item Cuando se aplica ML a un conjunto de datos se tiene un proyecto\pause
+	\item Un proyecto de ML no es lineal pero considera al menos lo siguiente\pause
+\end{itemize}
+
+\begin{enumerate}
+	\item Definir el problema\pause
+	\item Preparar los Datos\pause
+	\item Evaluar algoritmos\pause
+	\item Presentar resultados
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/procesoML1.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{../Programacion para ML/Contenido/img/procesoML2.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{../Programacion para ML/Contenido/img/procesoML3.png}
+\end{figure}
+\end{frame}
+
+\section{Consideraciones éticas}
+\begin{frame}{Consideraciones éticas}
+\begin{itemize}
+	\item La práctica de la ética ayuda a los profesionales a dar un paso atrás y evaluar una situación desde el punto de vista ético. \pause
+	\item Principalmente, la ética de datos está diseñada para ayudarnos a detenernos a pensar con la finalidad de comprender cómo 
+		enfrentar dilemas tanto a nivel personal 
+como profesional.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Privacidad}
+\begin{itemize}
+	\item La privacidad es un derecho humano intrínseco, que muchas personas desconocen, no ejercen o incluso renuncian a el.\pause
+	\item Sin embargo, la privacidad no es un tema menor y en la actualidad debe preocuparnos por lo menos conocer ese derecho.\pause
+	\item Conforme el Internet de las cosas crezca, será cada vez más difícil para los usuarios mantener su privacidad. 
+	\item Los dispositivos que utilizamos todos los días tienen muchos sensores que capturan en todo momento datos relacionados a 
+		nosotros y nuestra actividad. \pause
+	\item Si un usuario no conoce la política de uso de estos datos por parte del fabricante, concede libertad completa del uso de 
+		dichos datos.\pause
+	\item Por otro lado, si un usuario desea leer la política de uso de datos de algún fabricante, esta no será fácilmente comprensible 
+		debido a los tecnicismos que un documento de esta naturaleza posee. \pause
+	\item En muchas ocasiones no sólo se trata de desconocimiento o apatía del usuario, puede ser el caso de que un fabricante o 
+		proveedor no le facilite la tarea al usuario. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Privacidad}
+\begin{block}{Privacidad}
+El principal obstáculo de la privacidad consiste en que los consumidores desconozcan que se estén recolectando datos acerca de el sin su consentimiento.
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{../Programacion para ML/Contenido/img/ads.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Caso Target}
+\begin{itemize}
+	\item En 2012 Target recibió prensa negativa por identificar a mujeres embarazadas.\pause
+	\item Cuando Charles Duhigg (New York Times) investigaba sobre el valor de los datos en las empresas.\pause
+	\item Comenzó con la queja de un padre de Mineapolis al gerente de la tienda cuando su hija recibió cupones de descuento  en ropa de bebés y cunas.\pause
+	\item Pensó que los cupones eran inadecuadas y promovían el embarazo adolescente, pero resultó que su hija  si estaba embarazada.\pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Caso Target}
+\begin{itemize}
+	\item Target uso modelos predictivos.\pause
+	\item Se centró en las mujeres que se habían inscrito en mesas de regalo de bebés.\pause
+	\item Compararon el comportamiento de compra de esas mujeres con el comportamiento de los demás clientes.\pause
+	\item Encontraron 25 variables, entre ellas:  gran cantidad de lociones sin perfume; suplementos como calcio, magnesio y zinc; jabones libre de fragancia; 
+		bolsas de algodón jumbo y desinfectante para manos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Caso Target}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/target.png}
+\end{figure}
+\end{frame}
+
+\end{document}
