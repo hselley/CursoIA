@@ -1,0 +1,185 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{algorithm,algorithmic}
+\author{Héctor Selley}
+\title{Modelo no paramétrico: k Vecinos cercanos}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+\institute{Universidad Anáhuac México} 
+\date{\today} 
+%\subject{} 
+\begin{document}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+\begin{frame}<beamer>
+\frametitle{Contenido}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+%\begin{frame}
+%	\tableofcontents
+%\end{frame}
+
+\section{Introducción}
+
+\begin{frame}{Regla del vecino cercano}
+\begin{block}{Descripción}
+El método del k-ésimo vecino cercano utiliza el conjunto de entrenamiento y uno de prueba.
+Para cada renglón del conjunto de prueba, se encuentran los k vectores más cercanos 
+(distancia Euclidiana) del conjunto de entrenamiento y la clasificación se decide por mayoría
+de votos, en el caso de los empates se decide aleatoriamente. Si hubiera empates para el
+k-ésimo vector más cercano, todos los candidatos se consideran en la votación.
+\end{block}
+\end{frame}
+
+\begin{frame}{Regla del vecino cercano}
+\begin{itemize}
+	\item Nearest neighbour\pause
+	\item Identifica la categoría, con base en la de su vecino más cercano de acuerdo con alguna medida de distancia.\pause
+	\item Divide el espacio de características de forma no lineal.\pause
+	\item Tesela\footnotemark[1] o diagrama de Voronoi.\pause
+	\item Celdas formadas por todos los puntos, que se encuentran más cerca de un punto dado del conjunto de datos.	
+\end{itemize}
+\footnotetext[1]{\href{https://es.wikipedia.org/wiki/Tesela}{Pieza de piedra coloreada para confeccionar un mosaico.}}
+\end{frame}
+
+\begin{frame}{Regla del vecino cercano}
+Diagrama de Voroni
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.45]{../Programacion para ML/Contenido/img/801.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Regla del vecino cercano}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{../Programacion para ML/Contenido/img/802.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{K-Nearest Neighbour}
+\begin{itemize}
+	\item Consiste en encontrar en un conjunto de datos etiquetados, los $k$ vecinos más cercanos (k-NN) y asignar el nuevo 
+	patrón a la clase mayoritaria.\pause
+		\begin{itemize}
+			\item A la de mayor probabilidad aposteriori.\pause
+		\end{itemize}		
+	\item $k$ es un número positivo entero\pause
+		\begin{itemize}
+			\item En problemas binarios (de dos clases), es provechoso elegir un número impar.
+		\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{K-Nearest Neighbour}
+\begin{block}{Algoritmo k-NN}\pause
+\begin{enumerate}
+	\item Elegir el valor de $k$ y la distancia a ocupar\pause
+	\item Obtener la distancia del objeto a clasificar a cada elemento del conjunto de datos\pause
+	\item Tomar $k$ vecinos más cercanos y contar el número de elementos que pertenecen a cada categoría\pause
+	\item Asignar la categoría a la que pertenecen más vecinos
+\end{enumerate}
+\end{block}
+%\pause
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[scale=0.25]{../Programacion para ML/Contenido/img/803.png}
+%\end{figure}
+\end{frame}
+
+\section{Ejemplo}
+
+\begin{frame}{Ejemplo: Clasificación de color}
+\begin{block}{Problema:}
+	\begin{itemize}
+		\item Se tienen las coordenadas $(a,b)$ del modelo CIELAB\footnotemark[2]$^,$\footnotemark[3] de color para pixeles 
+			rojos y naranjas.\pause
+		\item Llega una nueva observación $\omega$ con las coordenadas $x=(172,160)$.\pause
+		\item ¿Cómo se clasifica $\omega$ eligiendo de 1 hasta 8 vecinos cercanos usando distancia euclidiana?
+	\end{itemize}
+\end{block}
+\footnotetext[2]{Sistema de interpretación de color \href{https://upload.wikimedia.org/wikipedia/commons/b/be/Lab_color_at_luminance_25_percent.png}{CIE 1976 L*a*b*}}
+\footnotetext[3]{\url{https://es.wikipedia.org/wiki/Espacio\_de\_color\_Lab}}
+\end{frame}
+
+\begin{frame}{Ejemplo: Clasificación de color}
+Formulación:\pause
+\begin{itemize}
+	\item Población $\Omega$: pixeles\pause
+	\item Clases\pause
+		\begin{itemize}
+			\item $\Omega_1$: naranja\pause
+			\item $\Omega_2$: rojo\pause
+		\end{itemize}
+	\item Vector de características: $X=[a,b]$ donde $X:\Omega \rightarrow \mathbb{R}^2$\pause
+	\item Función de distribución de probabilidad: no se asume\pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.2]{../Programacion para ML/Contenido/img/804.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo: Clasificación de color}
+\begin{itemize}
+	\item Se utilizará un archivo de datos: \textit{datosAB.txt}
+	\item Conjunto de datos de clasificación de pixeles en color de acuerdo a su valor $(a,b)$
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{../Programacion para ML/Contenido/img/805.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Matriz de confusión}
+\begin{itemize}
+	\item Comparar modelos de clasificación\pause
+	\item Utilizar CP para evaluar el rendimiento del clasificador\pause
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/806.png}
+	\end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matriz de confusión}
+\begin{itemize}
+	\item Proporción de clasificación correcta
+	\[ cc = \dfrac{1}{N}\sum_{i=0}^{g-1}n_{ii} \]\pause
+		\begin{itemize}
+			\item $N$: total de datos en CP\pause
+			\item Probabilidad de éxito\pause
+			\item En un problema de 2 clases:
+			\[ cc = \dfrac{TP+TN}{TP+FN+TN+FP} \]\pause
+		\end{itemize}
+	\item Proporción estimada del error $ = 1-cc$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matriz de confusión}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/807.png}
+\end{figure}
+\end{frame}
+
+\end{document}

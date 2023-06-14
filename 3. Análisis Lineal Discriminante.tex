@@ -1,0 +1,422 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+%\usetheme{Warsaw}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{algorithm,algorithmic}
+\author{Héctor Selley}
+\title{Análisis Lineal Discriminante}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+\institute{Universidad Anáhuac México} 
+\date{\today} 
+%\subject{} 
+\begin{document}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+\begin{frame}<beamer>
+\frametitle{Contenido}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+%\begin{frame}
+%	\tableofcontents
+%\end{frame}
+
+\section{Introducción}
+
+\begin{frame}{Introducción}
+\begin{itemize}
+	\item El análisis lineal discriminante (Lineal Discriminant Analysis) fue introducido por el estadístico y biólogo Ronald Aylmer Fisher 
+		en el año de 1963. \pause
+	\item Permite encontrar una combinación lineal de rasgos en común que caracterizan o separan dos o más clases de datos, objetos o eventos.\pause
+	\item LDA está estrechamente relacionado con el análisis de varianza (ANOVA) y el análisis de regresión, ya que ambos buscan expresar una 
+		variable independiente como una combinación lineal de características específicas.\pause
+	\item LDA se encuentra relacionado es con el análisis de componente principal, conocido como PCA, y el análisis factorial.\pause
+	\item Es necesario considerar que para la realización del LDA se debe contar con un conjunto de datos que permitan construir un modelo lineal\pause
+	\item La variable dependiente será aquella variable que clasifica a priori una población en subconjuntos de elementos.
+\end{itemize}
+\end{frame}
+
+\section{Objetivos}
+
+\begin{frame}{Objetivos}
+\begin{itemize}
+	\item Generar una combinación lineal de un conjunto de variables explicativas para segmentar una población en subconjuntos determinados por una 
+		variable independiente que a priori define la clasificación inicial.\pause
+	\item Identificar las características que diferencian y discriminan a dos o más grupos.\pause
+	\item Generar una función capaz de distinguir con la mayor precisión posible a los miembros de cada grupo.
+\end{itemize}
+\end{frame}
+
+\section{¿Qué es el análisis lineal discriminante?}
+
+\begin{frame}{¿Qué es LDA?}
+Utilizaremos un ejemplo para explicar en qué consiste el LDA, y su utilidad:
+\begin{itemize}
+	\item Supongamos que tenemos un nuevo medicamento experimental para el tratamiento del cáncer.\pause
+	\item Dicho medicamento se ha suministrado a un grupo de pacientes que padecen la enfermedad.\pause 
+	\item Se ha observado que el medicamento funciona muy bien para algunas personas, mientras que a las demás las ha hecho sentirse peor.\pause
+	\item Esto nos hace plantear la pregunta, ¿cómo se puede decidir a qué personas es conveniente suministrar el medicamento?.\pause
+	\item Se utilizará una expresión genética para ayudar a entender el problema y llegar a una posible solución.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+La Figura muestra una gráfica de la transcripción\footnotemark[1] del gen X, ésta gráfica es una recta numérica que describe la transcripción del gen X, y nos 
+sirve para determinar los pacientes a los cuales se les prescribirá el medicamento y cuáles pacientes no.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/fig401.png}
+\end{figure}
+\footnotetext[1]{Transcripción del ADN es el primer proceso de la expresión genética, mediante el cual se transfiere la información contenida en la secuencia del ADN.}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item En la recta numérica de la Figura anterior, los puntos representan personas. \pause
+	\item Mientras más a la izquierda de la recta numérica se encuentre un punto significa que tiene una menor transcripción del gen X.\pause
+	\item Mientras más a la derecha de la recta se encuentre un punto significa que tiene una mayor transcripción del gen X. \pause
+	\item Los puntos verdes representan un paciente en el cual el medicamento funcionó y los puntos rojos representan un paciente en el cual 
+		el medicamento no funcionó. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item Se puede observar que para la mayoría de los pacientes con una menor transcripción del gen X el medicamento funcionó, mientras que 
+		para la mayoría de los pacientes con una alta transcripción del gen X el medicamento no funcionó. \pause
+	\item En términos generales se puede concluir que el gen X nos indica satisfactoriamente los pacientes que deben tomar el medicamento y 
+		aquellos que no, salvo unas excepciones donde este mecanismo no resulta concluyente.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item Luego de ver los resultados obtenidos surge la pregunta: ¿cómo se puede mejorar el proceso?.\pause
+	\item Repitamos la idea añadiendo ahora la transcripción del gen Y.\pause
+	\item Esto ocasionará que nuestra gráfica ahora sea en dos dimensiones, donde el eje x corresponde a la transcripción del gen X 
+		en los pacientes y el eje y corresponde a la transcripción del gen Y.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{../Programacion para ML/Contenido/img/fig402.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item La línea punteada es una separación entre las dos categorías\pause
+	\item Los verdes representan los pacientes en los cuales el medicamento funcionó\pause 
+	\item Los rojos en los cuales el medicamento no funcionó.\pause
+	\item Es notable que esta separación es mejor que el caso unidimensional, con sólo el gen X\pause
+	\item Sin embargo, no todos los pacientes han sido ubicados en la categoría a la que pertenecen.\pause
+	\item Por lo tanto, nuevamente se agrega un gen, en este caso el gen Z, con la finalidad de mejorar la separación de los pacientes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+La Figura muestra la gráfica para las transcripciones de los tres genes, observe que ahora es un espacio en tres dimensiones. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/fig403.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item En la figura los puntos verdes representan los pacientes en los cuales el medicamento funcionó\pause
+	\item Los puntos rojos aquellos en los que no funcionó. \pause
+	\item Se tienen puntos de diferente tamaño lo que significa que tienen una mayor transcripción del gen Z. \pause
+	\item Para realizar la separación en el espacio tridimensional se requiere de un plano
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+La Figura muestra la separación de los pacientes utilizando un plano.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/fig404.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item En esta gráfica se puede observar que el plano logra separar todos los pacientes satisfactoriamente\pause
+	\item Por lo tanto es el método ideal para realizar esta tarea.\pause
+	\item Es natural pensar que mientras más genes se agreguen a los pacientes será mejor para poder realizar una mejor separación de los datos.\pause
+	\item Sin embargo, al tratar con más de tres dimensiones, el concepto se complica considerablemente\footnotemark[2]. 
+\end{itemize}
+\footnotetext[2]{La maldición de la dimensión.}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item Lo que se intenta lograr con el Análisis Lineal Discriminante es reducir las dimensiones a solo dos: plano cartesiano xy. \pause
+	\item Al realizar el proceso de reducción se buscará maximizar la separación entre los dos grupos, de manera que se puedan tomar 
+		mejores decisiones. \pause
+	\item Tomemos como punto de partida la Figura y realicemos la reducción de dos a una dimensión. 
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.2]{../Programacion para ML/Contenido/img/fig402.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item Una forma muy simple de realizarlo consiste en eliminar por completo el eje del gen Y y proyectar los datos hacia el eje del gen X. \pause
+	\item La Figura muestra este procedimiento y el resultado obtenido.\pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/fig405.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item Esta reducción es simple pero se ignora toda la información del gen Y. \pause
+	\item LDA busca resolver este problema, utilizando la información que proporcionan los dos genes en los dos ejes.\pause 
+	\item Se define un nuevo eje en el cual se maximice la separación de las dos categorías. \pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.31]{../Programacion para ML/Contenido/img/fig406.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item Para LDA se busca maximizar la separación de las dos categorías.\pause
+	\item Se requiere un nuevo eje mediante el cual se consiga maximizar dicha separación.\pause
+	\item La forma como mediremos la separación entre los datos es mediante la media aritmética $\mu$, con dispersión (varianza) $s^2$.\pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../Programacion para ML/Contenido/img/fig407.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item El objetivo de LDA es crear un nuevo eje que permita dividir los datos en dos categorías de acuerdo a dos criterios:\pause
+		\begin{itemize}
+			\item Maximizar la separación de las medias\pause
+			\item Minimizar la dispersión de los datos\pause
+\end{itemize}			
+Esto es: \pause
+\begin{equation}
+	\dfrac{(\mu_1 - \mu_2)^2}{s_1^2 + s_2^2} = \dfrac{d^2}{s_1^2 + s_2^2}
+\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+\begin{itemize}
+	\item $d$ se define como la distancia d a la diferencia de las medias\pause
+	\item Se desea que $d$ sea muy grande de manera que la distancia entre las medias sea lo más grande posible.\pause 
+	\item Además, se desea que la dispersión de los datos $s^2$ sea lo más pequeña posible para que las categorías concentren mejor los datos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+Resultado de maximizar la distancia de las medias y minimizar la dispersión
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{../Programacion para ML/Contenido/img/fig408.png}
+\end{figure}
+\end{frame}
+
+\section{Función Lineal Discriminante de Fisher}
+
+\begin{frame}{Función Lineal Discriminante de Fisher}
+\begin{itemize}
+	\item Una matriz X puede hacerse al no asumir una forma paramétrica particular de la distribución de las poblaciones 
+		$\Pi_1, \Pi_2, \dots, \Pi_g$, pero buscando una regla sensible para discriminarlos.\pause
+	\item La sugerencia de Fisher consiste en buscar una función lineal $a'x$ \pause
+	\item Debe maximizar el cociente de la suma de los cuadrados de la distancia entre los grupos sobre la suma de los cuadrados 
+		de la distancia dentro de los grupos. \pause
+\end{itemize}
+Esto es, sea:
+\begin{align*}
+	y = Xa =\left[ \begin{array}{c}
+				X_1a\\
+				\vdots\\
+				X_ga
+			\end{array}\right]
+		   = \left[ \begin{array}{c}
+				y_1\\
+				\vdots\\
+				y_g
+			\end{array}\right]
+\end{align*}
+\end{frame}
+
+\begin{frame}{Función Lineal Discriminante de Fisher}
+la combinación lineal de las columnas de $X$. Entonces $y$ tiene un total de suma de cuadrados\pause
+\begin{align*}
+	y'Hy = a'X'HXa = a'Ta
+\end{align*}\pause
+
+los cuales pueden ser particionados como una suma de cuadrados de la distancia dentro de los grupos:\pause
+
+\begin{align*}
+	\sum n_i(\overline{y_i} - \overline{y_i})^2 = \sum n_i \left[a'(\overline{x_i} - \overline{x})^2 \right] = a'Ba
+\end{align*}
+\end{frame}
+
+\begin{frame}{Función Lineal Discriminante de Fisher}
+donde $\overline{y_i}$ es la media de los sub-vectores $y_i$ de $y$, y $H$ es la matriz de tamaño $n_i\times n_i$.\\
+Si $a$ es el vector que maximiza \pause
+\begin{align*}
+	a'Ba / a' Wa
+\end{align*}
+se pude denominar a la expresión $a'x$ como \textit{función discriminante lineal de Fisher}.
+\end{frame}
+
+\begin{frame}{Función Lineal Discriminante de Fisher}
+\begin{theorem}[Función Lineal Discriminante de Fisher]
+	El vector $a$ en la función discriminante de Fisher es un eigenvector de $W^{-1}=B$ que corresponde al eigenvalor más grande.
+	\label{teo:Fisher}
+\end{theorem}
+\end{frame}
+
+
+\section{¿Cómo funciona el Análisis Lineal Discriminante?}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+\begin{itemize}
+	\item La solución propuesta por Fisher es maximizar la función que representa la diferencia entre las medias normalizada por 
+		la variabilidad entre clases denominada \textbf{dispersión}.\pause
+	\item Para cada clase se define la dispersión como el equivalente a la varianza, esto es la suma del cuadrado de las diferencias 
+		entre las muestras proyectadas y la media de su clase correspondiente. \pause
+\end{itemize}
+Esto  se muestra en la expresión:
+\begin{align}
+	\widetilde{S_i}^2 = \sum_{y\in \omega_i}(y-\widetilde{\mu}_i)^2
+	\label{eq:var}
+\end{align}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+\begin{itemize}
+	\item $\widetilde{S_i}^2$ representa la variabilidad de la clase $\omega_i$ luego de proyectarla en su espacio-$y$.\pause
+	\item $\widetilde{S_1}^2 + \widetilde{S_2}^2$ mide la variablididad entre las dos clases luego de proyectarlas por lo tanto se 
+		llama \textbf{dispersión entre clases}.\pause
+	\item El discriminante lineal de Fisher se define como la función lineal $w^Tx$ que maximiza la función criterio $J(\omega)$. \pause
+	\item Esto es la distancia entre las medias proyectadas normalizadas dividido por la dispersión entre clases de los datos, 
+		dado por la ecuación: \pause
+\end{itemize}
+\begin{align}
+	J(\omega) = \dfrac{|\widetilde{\mu}_1 - \widetilde{\mu}_1|^2}{\widetilde{S_1}^2 + \widetilde{S_2}^2}
+	\label{eq:funcionJ}
+\end{align}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+\begin{itemize}
+	\item Ahora se busca que los datos de la misma clase se proyecten lo más cerca entre sí y además que las medias proyectadas se encuentren 
+		lo más lejos posible entre sí.\pause
+	\item Para encontrar la proyección óptima $w^*$ es necesario expresar $J(w)$ como función de $w$, por ello se define la dispersión
+		multivariante en forma matricial.\pause
+\end{itemize}
+
+\begin{align*}
+	S_i &= \sum_{x\in\omega_i} (x-\mu_i)(x-\mu_i)^T\\
+	S_w &= S_1 + S_2
+\end{align*}\pause
+donde $S_i$ representa la matriz de covarianza de la clase $w_i$ y $S_w$ se llama la \textbf{matriz de dispersión entre clases} de los datos proyectados.
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+La dispersión de la proyección $y$ puede ser representada como una función de la matriz de dispersión, esto es:\pause
+
+\begin{align*}
+	\widetilde{S_i}^2 &= \sum_{y\in\omega}(y-\widetilde{\mu}_i)^2\\
+		&= \sum_{x\in\omega_i}(w^Tx-w^T\mu_i)^2\\
+		&= \sum_{x\in\omega_i}w^T(x-\mu_i)(x-\mu_i)^Tw\\
+		&= w^T\left[\sum_{x\in\omega_i}(x-\mu_i)(x-\mu_i)^T \right]w\\
+		&= w^TS_iw
+\end{align*}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+y además: \pause
+\begin{align*}
+	\widetilde{S_1}^2 + \widetilde{S_2}^2 &= w^TS_1w + w^TS_2w\\
+		&= w^T(S_1+S_2)w\\
+		&= w^TS_ww\\
+%		&= \widetilde{S}_w
+\end{align*}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+Por otro lado, la diferencia entre las medias proyectadas en $y$ se pueden expresar en términos del espacio original $x$, esto es:\pause
+\begin{align*}
+	(\widetilde{\mu}_1 - \widetilde{\mu}_2)^2 &= (w^T\mu_1 - w^T\mu_2)^2\\
+		&= w^T(\mu_1-\mu_2)(\mu_1-\mu_2)^Tw\\
+		&= w^TS_Bw
+\end{align*}
+
+donde $S_B$ es la matriz de dispersión entre clases de los datos originales.\pause
+Con estos resultados se puede escribir la ecuación (\ref{eq:funcionJ}) en términos de $S_w$ y $S_B$, esto es:\pause
+\begin{align*}
+	J(w) &= \dfrac{|\widetilde{\mu}_1 - \widetilde{\mu}_1|^2}{\widetilde{S_1}^2 + \widetilde{S_2}^2} \\
+		&= \dfrac{w^TS_Bw}{w^TS_ww}
+\end{align*}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+$J(w)$ está en función de las medias entre clases normalizado por la matriz de dispersión entre clases. Dado que se busca que 
+la distancia entre las medias de las clases sea máxima, se determinará un máximo de la función $J(w)$.
+\begin{align*}
+	&\dfrac{d}{dw}J(w) = \dfrac{d}{dw	}\left[\dfrac{w^TS_Bw}{w^TS_ww}\right] = 0\\
+	&	(w^TS_ww)\dfrac{d}{dw}(w^TS_Bw)-(w^TS_Bw)\dfrac{d}{dw}(w^TS_ww)=0\\
+	&	(w^TS_ww)(2S_Bw)-(w^TS_Bw)(2S_ww) = 0\\
+	&	\left[\dfrac{w^TS_ww}{w^TS_ww}\right]S_Bw - \left[\dfrac{w^TS_Bw}{w^TS_ww}\right]S_ww  = 0\\
+	&	IS_Bw-J(w)S_ww = 0\\
+	&	S_w^{-1}S_Bw - J(w)w = 0
+\end{align*}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+Resolviendo el problema para el eigenvalor:
+\begin{align*}
+	S_w^{-1}S_Bw = \lambda w && \wedge && \lambda = J(w)
+\end{align*}
+donde $\lambda$ es un escalar. Entonces esto resulta en que el vector de proyección óptima $w^*$ se puede expresar como:
+\begin{align}
+	w^* &= \max J(w)\nonumber\\
+		&= \max \left[\dfrac{w^TS_Bw}{w^TS_ww}\right]\nonumber\\
+		&= S_w^{-1}(\mu_1-\mu_2)
+	\label{eq:fisherLD}
+\end{align}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Análisis Lineal Discriminante?}
+La expresión se denomina como el \textbf{discriminante lineal de Fisher}, que determina la dirección de la proyección de 
+los datos en una dimensión. Por lo tanto, la solución será el eigenvector 
+\[S_w^{-1}S_B\].
+\end{frame}
+
+\end{document}
