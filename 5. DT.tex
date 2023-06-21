@@ -1,0 +1,229 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{algorithm,algorithmic}
+\author{Héctor Selley}
+\title{Árboles de decisión}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+\institute{Universidad Anáhuac México} 
+\date{\today} 
+%\subject{} 
+\begin{document}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+\begin{frame}<beamer>
+\frametitle{Contenido}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+%\begin{frame}
+%	\tableofcontents
+%\end{frame}
+
+\section{¿Qué es un árbol de decisión?}
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{itemize}\pause
+		\item Un árbol de decisión es un modelo de predicción. \pause
+		\item Se utiliza en diversas disciplinas como la Inteligencia Artificial, 
+		Medicina, Ingeniería, Ciencia de Datos y la Economía, entre muchas otras. \pause
+		\item Los árboles se construyen desde un conjunto de datos \pause 
+		\item Los diagramas resultantes son similares a los sistemas de predicción que se basan
+		en reglas \pause
+		\item Sirven para categorizar una serie de condiciones que ocurren en forma sucesiva.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	Los árboles de decisión se utilizan en cualquier proceso que implique una toma de decisión\pause, por ejemplo:\pause
+	\begin{itemize}
+		\item Búsqueda binaria \pause
+		\item Sistemas expertos \pause
+		\item Árboles de juego
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{itemize}
+		\item Los árboles de decisión son generalmente binarios \pause
+		\item Significa que pueden tomar dos opciones \pause
+		\item Aunque es posible que existan árboles de tres o más opciones.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Para qué sirve un árbol de decisión?}
+	Objetivos del árbol de decisión: \pause
+	\begin{itemize}
+		\item Encontrar un árbol binario que clasifique datos de entrada 
+			con una \textit{dispersión} mínima. \pause
+		\item Calcular la eficiencia del proceso de clasificación mediante 
+			la \textit{dispersión}.
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{block}{Árbol de decisión}
+		Árbol de decisión es una técnica de estructura de datos jerárquicos 
+		que se utiliza para la clasificación y regresión de datos.\pause 
+		Este método emplea la técnica \textit{divide y vencerás}, mediante 
+		la cual encuentra recursivamente la separación por clasificación de 
+		los datos de entrada. 
+	\end{block}
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{itemize}
+		\item Un árbol de decisión es un grafo que consiste en nodos y aristas.\pause
+		\item Cada nodo puede tener máximo dos aristas, razón por lo que se le denomina 
+		como binario.\pause
+		\item Un árbol de decisión responde una pregunta acerca de los datos y los 
+		clasifica de acuerdo con la respuesta de dicha pregunta. \pause
+	\end{itemize}
+
+	Utilizaremos algunos ejemplos para explicar los árboles de decisión, cómo se 
+	definen y construyen.
+\end{frame}
+
+\section{Ejemplos}
+\subsection{Ejemplo 1}
+\begin{frame}{Ejemplo 1}
+	La figura \ref{fig:arbol1} muestra un árbol de decisión que mediante una pregunta, 
+	cuya respuesta puede ser verdadero o falso, clasifica los datos de entrada en dos 
+	grupos. \pause
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{../../Libro ML/Decision Tree/notas/img/arbol1.pdf}
+		\caption{Ejemplo de árbol de decisión.}
+		\label{fig:arbol1}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 1}
+	\begin{itemize}
+		\item En los árboles, los \textbf{nodos} se representan con círculos o elipses 
+		en los cuales se aloja una pregunta \pause 
+		\item Las aristas son la conexión entre ellos a través de la respuesta de la 
+		pregunta. 
+		\item Se denomina \textbf{rama} al conjunto de al menos dos nodos conectados 
+		por una arista.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 1}
+	\begin{itemize}
+		\item Imagine que tiene un conjunto de datos que desea clasificar mediante 
+		una pregunta cuya respuesta es verdadero o falso. (figura \ref{fig:arbol1}) \pause
+		\item Esto permite clasificar los datos en dos grupos, uno cuya respuesta 
+		fue verdadera y otro cuya respuesta fue falsa. \pause
+		\item Para un árbol tan pequeño como el de este ejemplo, la separación de 
+		los datos es muy limitada por lo que se busca mejorarla empleando más nodos 
+		en el árbol, lo que significa un mayor número de categorías.\pause
+		\item Adicionalmente, la pregunta sólo acepta respuestas absolutas, si se 
+		requiere de un rango de respuestas, por ejemplo, un rango de números 
+		habría que modificar el árbol.
+	\end{itemize}
+\end{frame}
+
+\subsection{Ejemplo 2}
+\begin{frame}{Ejemplo 2}
+	Construyamos un árbol con más nodos y ramificaciones, para este ejemplo se clasifica una persona de acuerdo con su edad. Se clasifica a una persona como adulto si su 
+edad es mayor o igual a 18 años, como adolescente si está entre los 12 y 18 años, como niño si está entre los 2 y 12 años y como bebé si es menor a 2 años. El árbol 
+resultante se muestra en la figura \ref{fig:arbol2}.
+
+En el árbol resultante de la figura \ref{fig:arbol2} clasifica a las personas de acuerdo con su edad utilizando el criterio antes mencionado. En el árbol las personas 
+han sido clasificadas en los nodos: adulto, adolescente, niño y bebé. A estos nodos, aquellos que tienen flechas que llegan a él pero no salen de él, se les denomina 
+como \textbf{nodos terminales} o de decisión. Al nodo inicial, aquel del cual sólo salen flechas de el pero no entran, se le denomina \textbf{nodo raíz} o simplemente
+\textbf{raíz}. Los demás simplemente se les denomina como \textbf{nodos}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../../Libro ML/Decision Tree/notas/img/arbol2.pdf}
+	\caption{Árbol de decisión con más nodos.}
+	\label{fig:arbol2}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 2}
+	En la figura \ref{fig:arbol2} el nodo en rojo es la raíz, los nodos en verde son terminales y los azules son simplemente nodos.
+
+En el árbol de decisión de la figura \ref{fig:arbol2} clasifica adecuadamente a las personas, dado que una persona sólo tiene una edad, la clasificación es 
+perfecta de esa forma. Imagínese que deseamos clasificar personas de acuerdo con otro criterio, un criterio en el cual la respuesta no será tan específica como la 
+edad o incluso puede que no haya una respuesta. Por ejemplo, imagine que deseamos clasificar personas de acuerdo con su sabor preferido de helado, puede que tenga 
+uno, varios o incluso ninguno.
+En una situación como ésta, habrá una \textbf{impureza} en la clasificación. Más adelante se explicará a través del ejemplo la impureza y cómo se calcula.
+\end{frame}
+
+\subsection{Ejemplo 3}
+\begin{frame}{Ejemplo 3}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+\begin{frame}{}
+	
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}{}
+	
+\end{frame}
+
+\end{document}
