@@ -1,0 +1,673 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{algorithm,algorithmic}
+\author{Héctor Selley}
+\title{Árboles de decisión}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+\institute{Universidad Anáhuac México} 
+\date{\today} 
+%\subject{} 
+\begin{document}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+\begin{frame}<beamer>
+\frametitle{Contenido}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+%\begin{frame}
+%	\tableofcontents
+%\end{frame}
+
+\section{¿Qué es un árbol de decisión?}
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{itemize}\pause
+		\item Un árbol de decisión es un modelo de predicción. \pause
+		\item Se utiliza en diversas disciplinas como la Inteligencia Artificial, 
+		Medicina, Ingeniería, Ciencia de Datos y la Economía, entre muchas otras. \pause
+		\item Los árboles se construyen desde un conjunto de datos \pause 
+		\item Los diagramas resultantes son similares a los sistemas de predicción que se basan
+		en reglas \pause
+		\item Sirven para categorizar una serie de condiciones que ocurren en forma sucesiva.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	Los árboles de decisión se utilizan en cualquier proceso que implique una toma de decisión\pause, por ejemplo:\pause
+	\begin{itemize}
+		\item Búsqueda binaria \pause
+		\item Sistemas expertos \pause
+		\item Árboles de juego
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{itemize}
+		\item Los árboles de decisión son generalmente binarios \pause
+		\item Significa que pueden tomar dos opciones \pause
+		\item Aunque es posible que existan árboles de tres o más opciones.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Para qué sirve un árbol de decisión?}
+	Objetivos del árbol de decisión: \pause
+	\begin{itemize}
+		\item Encontrar un árbol binario que clasifique datos de entrada 
+			con una \textit{dispersión} mínima. \pause
+		\item Calcular la eficiencia del proceso de clasificación mediante 
+			la \textit{dispersión}.
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{block}{Árbol de decisión}
+		Árbol de decisión es una técnica de estructura de datos jerárquicos 
+		que se utiliza para la clasificación y regresión de datos.\pause 
+		Este método emplea la técnica \textit{divide y vencerás}, mediante 
+		la cual encuentra recursivamente la separación por clasificación de 
+		los datos de entrada. 
+	\end{block}
+\end{frame}
+
+\begin{frame}{¿Qué es un árbol de decisión?}
+	\begin{itemize}
+		\item Un árbol de decisión es un grafo que consiste en nodos y aristas.\pause
+		\item Cada nodo puede tener máximo dos aristas, razón por lo que se le denomina 
+		como binario.\pause
+		\item Un árbol de decisión responde una pregunta acerca de los datos y los 
+		clasifica de acuerdo con la respuesta de dicha pregunta. \pause
+	\end{itemize}
+
+	Utilizaremos algunos ejemplos para explicar los árboles de decisión, cómo se 
+	definen y construyen.
+\end{frame}
+
+\section{Ejemplos}
+\subsection{Ejemplo 1}
+\begin{frame}{Ejemplo 1}
+	La figura \ref{fig:arbol1} muestra un árbol de decisión que mediante una pregunta, 
+	cuya respuesta puede ser verdadero o falso, clasifica los datos de entrada en dos 
+	grupos. \pause
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.4]{../../Libro ML/Decision Tree/notas/img/arbol1.pdf}
+		\caption{Ejemplo de árbol de decisión.}
+		\label{fig:arbol1}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 1}
+	\begin{itemize}
+		\item En los árboles, los \textbf{nodos} se representan con círculos o elipses 
+		en los cuales se aloja una pregunta \pause 
+		\item Las aristas son la conexión entre ellos a través de la respuesta de la 
+		pregunta. 
+		\item Se denomina \textbf{rama} al conjunto de al menos dos nodos conectados 
+		por una arista.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 1}
+	\begin{itemize}
+		\item Imagine que tiene un conjunto de datos que desea clasificar mediante 
+		una pregunta cuya respuesta es verdadero o falso. (figura \ref{fig:arbol1}) \pause
+		\item Esto permite clasificar los datos en dos grupos, uno cuya respuesta 
+		fue verdadera y otro cuya respuesta fue falsa. \pause
+		\item Para un árbol tan pequeño como el de este ejemplo, la separación de 
+		los datos es muy limitada por lo que se busca mejorarla empleando más nodos 
+		en el árbol, lo que significa un mayor número de categorías.\pause
+		\item Adicionalmente, la pregunta sólo acepta respuestas absolutas, si se 
+		requiere de un rango de respuestas, por ejemplo, un rango de números 
+		habría que modificar el árbol.
+	\end{itemize}
+\end{frame}
+
+\subsection{Ejemplo 2}
+\begin{frame}{Ejemplo 2}
+	\begin{block}{Descripción del problema}
+		Construyamos un árbol con más nodos y ramificaciones, para este ejemplo se clasifica una persona de acuerdo con su edad. \pause
+		Se clasifica a una persona como adulto si su edad es mayor o igual a 18 años, como adolescente si está entre los 12 y 18 años, 
+		como niño si está entre los 2 y 12 años y como bebé si es menor a 2 años. \pause
+		El árbol resultante se muestra en la figura \ref{fig:arbol2}.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Ejemplo 2}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{../../Libro ML/Decision Tree/notas/img/arbol2.pdf}
+		\caption{Árbol de decisión con más nodos.}
+		\label{fig:arbol2}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 2}
+	\begin{itemize}
+		\item En el árbol resultante de la figura \ref{fig:arbol2} clasifica a las personas de acuerdo con su edad 
+			utilizando el criterio antes mencionado. \pause
+		\item En el árbol las personas han sido clasificadas en los nodos: adulto, adolescente, niño y bebé.\pause
+		\item A los nodos que tienen flechas que llegan a él pero no salen de él, se les denomina como 
+			\textbf{nodos terminales} o de decisión.\pause
+		\item Al nodo inicial del que sólo salen flechas de el pero no entran, se le denomina \textbf{nodo raíz} 
+			o simplemente \textbf{raíz}.\pause
+		\item Los demás simplemente se les denomina como \textbf{nodos}. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 2}
+	\begin{itemize}
+		\item En la figura \ref{fig:arbol2} el nodo en rojo es la raíz, los nodos en verde son terminales y los 
+			azules son simplemente nodos.\pause
+		\item En el árbol de decisión de la figura \ref{fig:arbol2} clasifica adecuadamente a las personas, 
+			dado que una persona sólo tiene una edad, la clasificación es perfecta de esa forma.\pause
+		\item Imagínese que deseamos clasificar personas de acuerdo con otro criterio, un criterio en el cual 
+			la respuesta no será tan específica como la edad o incluso puede que no haya una respuesta.\pause
+		\item Por ejemplo, imagine que deseamos clasificar personas de acuerdo con su sabor preferido de helado,
+			puede que tenga uno, varios o incluso ninguno.\pause
+		\item En una situación como ésta, habrá una \textbf{impureza} en la clasificación. 
+	\end{itemize}
+\end{frame}
+
+\subsection{Ejemplo 3}
+\begin{frame}{Ejemplo 3}
+	\begin{block}{Descripción del problema}
+		Supongamos que a través de un estudio se obtiene un conjunto de datos acerca de 303 pacientes en los 
+		que se sabe si sufren de dolor en el pecho, tienen buena circulación sanguínea, arterias bloqueadas 
+		y ataque cardíaco.\pause Se sabe que existe una relación entre estos padecimientos, pero se busca 
+		clasificar a los pacientes de la mejor forma posible.\pause Se desea determinar las causas que 
+		provocan un ataque cardíaco y clasificar a los pacientes de acuerdo con ello, además un paciente que
+		sufre un ataque cardíaco no presenta necesariamente todos los síntomas. \pause 
+	\end{block}
+\end{frame}
+
+\begin{frame}{Ejemplo 3.}
+	
+	\begin{table}
+		\centering
+		\begin{tabular}{c|c|c|c}
+			\toprule
+			Dolor de pecho & Buena circulación & Arterias bloqueadas & Ataque cardíaco \\
+			\midrule		
+			No & No & No & No \\\midrule
+			Si & Si & Si & Si \\\midrule
+			-- & Si & No & No \\\midrule
+			Si & Si & No & No \\\midrule
+			Si & No & -- & Si \\\midrule
+			No & -- & Si & Si \\\midrule
+			\vdots & \vdots & \vdots & \vdots \\
+			\bottomrule
+		\end{tabular}
+		\caption{Resultados del estudio de cada uno de los pacientes.}
+		\label{tab:datosPacientes}
+	\end{table}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item La tabla \ref{tab:datosTotalesPacientes} muestra la cantidad total de pacientes obtenidos 
+			por categoría a través del estudio. \pause 
+		\item Observe que el total de pacientes por síntoma no es igual para todas las categorías \pause
+		\item Esto es debido a que no se sabe la información completa para todos los pacientes. \pause
+	\end{itemize}
+
+\begin{table}
+	\centering
+	\begin{tabular}{c|c|c|c|c}
+		\toprule
+		 & Dolor de pecho & Buena circulación & Arterias bloqueadas & Ataque cardíaco \\
+		\midrule		
+		Si & 144 & 164 & 123 & 137 \\\midrule
+		No & 159 & 133 & 174 & 160 \\\midrule
+		Total & 303 & 297 & 297 & 297\\
+		\bottomrule
+	\end{tabular}
+	\caption{Resultados totales del estudio de los pacientes.}
+	\label{tab:datosTotalesPacientes}
+\end{table}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Dado que se desea clasificar a los 303 pacientes de acuerdo con el síntoma que les ocasionó un infarto \pause
+		\item Se necesita determinar mediante cuál de los tres síntomas se debe clasificar en primer lugar.\pause
+		\item Este primer síntoma con el que se comience la clasificación se convertirá en el \textbf{nodo raíz} del árbol.\pause
+		\item Por esta razón se analizará cuál de los tres síntomas separa mejor a los pacientes que sufrieron un ataque cardíaco.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item En la tabla \ref{tab:datosTotalesDesglosados} se muestran los datos totales desglosados por síntoma y si sufrieron o
+			no un ataque cardíaco. \pause
+		\item Utilizando estos datos se puede llevar a cabo la separación de los pacientes respecto a si sufren de dolor de pecho 
+			o no. \pause
+		\item La separación se muestra en la figura \ref{fig:arbol3-1}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{table}
+		\centering
+		\begin{tabular}{c||cc|cc|cc}
+		  \toprule
+		  \multirow{2}{*}{Ataque} & \multicolumn{2}{c}{Dolor de pecho} & \multicolumn{2}{c}{Buena circulación} & \multicolumn{2}{c}{Arterias bloqueadas} \\  
+								  & Si               & No              & Si                & No                & Si                 & No                 \\ \midrule
+		  Si                      & 105              & 34              & 37                & 33                & 92                 & 45                 \\ \midrule
+		  No                      & 39               & 125             & 127               & 100               & 31                 & 129                \\ \midrule\midrule
+		  \textbf{Total}          & 144              & 159             & 164               & 133               & 123                & 174                \\ 
+		  \bottomrule
+		\end{tabular}
+		\caption{Resultados Desglosados de los pacientes.}
+		\label{tab:datosTotalesDesglosados}
+	  \end{table}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{../../Libro ML/Decision Tree/notas/img/arbol3-1.pdf}
+		\caption{Separación mediante dolor de pecho.}
+		\label{fig:arbol3-1}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Observe que la separación no es perfecta, dado que en cada rama se encuentran pacientes que han 
+			sufrido un ataque y otros que no.\pause
+		\item Esto es lo que se denomina como \textbf{impureza}. \pause
+		\item Resulta intuitivo buscar una separación que ocasione una menor impureza\pause
+		\item Por lo que para medirla resulta indispensable una métrica. \pause
+		\item Para medir la impureza se utiliza el
+		\textbf{índice de impureza de Gini}\cite{breiman2017classification}\cite{gelfand}, mediante la expresión (\ref{eq:gini}). 
+	\end{itemize} 
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{equation}
+		G = 1 - (\mbox{Probabilidad Si})^2 - (\mbox{Probabilidad No})^2 
+		\label{eq:gini}
+	\end{equation}
+	\begin{itemize}
+		\item Donde $G$ representa el índice de impureza Gini \pause
+		\item \textit{Probabilidad Si} y \textit{Probabilidad No} son la probabilidad de que en un paciente tenga 
+			o no tenga dolor de pecho respectivamente.\pause
+		\item La probabilidad simplemente se calcula mediante el cociente de los pacientes con o sin dolor entre 
+			el total de pacientes.\pause
+		\item De esta forma, se calcula el índice para cada separación posible y se elige aquella que tenga el 
+			menor valor de impureza. 
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Para calcular el índice de impureza para la separación con respecto a dolor de pecho $G_{DP}$, 
+		se debe analizar a su vez el índice para cada una de las ramas de dicha separación\pause
+		\item Esto es $G_{Si}$ y $G_{No}$.\pause
+		\item Por lo tanto, el cálculo de la impureza para cada caso es el siguiente:
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{align*}
+		G_{Si} &= 1 - (\mbox{Probabilidad Si})^2 - (\mbox{Probabilidad No})^2  \\
+			&= 1-\left(\dfrac{105}{105+39}\right)^2 -\left(\dfrac{39}{105+39} \right)^2\\ 
+			&= 0.3949 
+	\end{align*}\pause
+	\begin{align*}
+		G_{No} &= 1- (\mbox{Probabilidad Si})^2 - (\mbox{Probabilidad No})^2  \\
+			&= 1-\left(\dfrac{34}{34+125}\right)^2 -\left(\dfrac{125}{34+125} \right)^2\\
+			&= 0.3362
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Una vez calculado el índice de impureza de Gini para las dos hojas terminales, 
+			se calcula el índice total de impureza al separar los pacientes mediante el dolor de pecho.\pause
+		\item Sin embargo, dado que ambas hojas no representan la misma cantidad de pacientes se necesita 
+			utilizar el promedio ponderado de los índices de impureza para cada rama.\pause 
+		\item Esto está dado en la expresión (\ref{eq:promedioPonderado}).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{equation}
+		G = \dfrac{P_{Si}}{P_{Si} + P_{No}}G_{Si} + \dfrac{P_{No}}{P_{Si}+P_{No}}G_{No}
+		\label{eq:promedioPonderado}
+	\end{equation}
+	\begin{itemize}
+		\item Donde $P_{Si}$ es la cantidad total de pacientes que sufren dolor de pecho y $P_{No}$ la cantidad de pacientes que no lo sufren. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	De esta forma, el índice total de impureza al separar pacientes mediante dolor de pecho $G_{DP}$ es:\pause
+	\begin{align*}
+		G_{DP} &= \dfrac{P_{Si}}{P_{Si} + P_{No}}G_{Si} + \dfrac{P_{No}}{P_{Si}+P_{No}}G_{No} \\
+			&= \dfrac{105+39}{105+39+34+125}\times (0.3949) + \dfrac{34+125}{105+39+34+125}\times (0.3362) \\
+			&= 0.3641
+	\end{align*}		
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Ahora se realiza la separación respecto a la buena circulación de la sangre y todos los cálculos 
+		correspondientes para obtener el índice de impureza $G_{BC}$ para la separación mediante buena 
+		circulación de la sangre.
+	\end{itemize}\pause
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.45]{../../Libro ML/Decision Tree/notas/img/arbol3-2.pdf}
+	\caption{Separación mediante buena circulación de la sangre.}
+	\label{fig:arbol3-2}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{align*}
+		G_{Si} &= 1 - (\mbox{Probabilidad Si})^2 - (\mbox{Probabilidad No})^2  \\
+			&= 1-\left(\dfrac{37}{37+127}\right)^2 -\left(\dfrac{127}{37+127} \right)^2\\
+			&= 0.3494
+	\end{align*}\pause
+	\begin{align*}
+		G_{No} &= 1- (\mbox{Probabilidad Si})^2 - (\mbox{Probabilidad No})^2  \\
+			&= 1-\left(\dfrac{100}{100+33}\right)^2 -\left(\dfrac{33}{100+33} \right)^2\\
+			&= 0.3731
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{align*}
+		G_{BC} &= \dfrac{P_{Si}}{P_{Si} + P_{No}}G_{Si} + \dfrac{P_{No}}{P_{Si}+P_{No}}G_{No} \\
+			&= \dfrac{37+127}{37+127+100+33}\times (0.3494) + \dfrac{100+33}{37+127+100+33}\times (0.3731) \\
+			&= 0.3600
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Por último, se realiza la separación mediante las arterias bloqueadas y los cálculos 
+		correspondientes para obtener el índice de impureza $G_{AB}$ para la separación mediante las 
+		arterias bloqueadas.
+	\end{itemize}\pause
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.45]{../../Libro ML/Decision Tree/notas/img/arbol3-3.pdf}
+		\caption{Separación mediante arterias bloqueadas.}
+		\label{fig:arbol3-3}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{align*}
+		G_{Si} &= 1 - (\mbox{Probabilidad Si})^2 - (\mbox{Probabilidad No})^2  \\
+			&= 1-\left(\dfrac{92}{92+31}\right)^2 - \left(\dfrac{31}{92+31} \right)^2\\
+			&= 0.3770
+	\end{align*}\pause
+	\begin{align*}
+		G_{No} &= 1 - (\mbox{Probabilidad Si})^2 - (\mbox{Probabilidad No})^2  \\
+			&= 1-\left(\dfrac{45}{45+129}\right)^2 - \left(\dfrac{129}{45+129}\right)^2\\
+			&= 0.3834
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{align*}
+		G_{AB} &= \dfrac{P_{Si}}{P_{Si} + P_{No}}G_{Si} + \dfrac{P_{No}}{P_{Si}+P_{No}}G_{No} \\
+			&= \dfrac{92+31}{92+31+45+129}\times (0.3770) + \dfrac{45+129}{92+31+45+129}\times (0.3834)\\
+			&= 0.3808
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item La impureza es un efecto no deseado en la separación de pacientes bajo cualquier criterio\pause
+		\item Por esa razón es que se decidirá entre las posibles separaciones por aquella que tenga un 
+			menor valor de impureza.\pause
+		\item Comparando los valores de impureza:\pause
+			\begin{itemize}
+				\item $G_{DP} = 0.3641$
+				\item $G_{BC} = 0.36$
+				\item $G_{AB} = 0.3808$
+			\end{itemize}
+		\item Se decide por $G_{BC}$ debido a que su valor es el menor de todos.\pause
+		\item Esto significa que buena circulación se convertirá en el primer nodo, el \textbf{nodo raíz}.\pause
+		\item El árbol hasta ahora queda como en la figura \ref{fig:arbol3-2}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{../../Libro ML/Decision Tree/notas/img/arbol3-2.pdf}
+		\caption{Separación mediante buena circulación de la sangre.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Ahora debemos separar los pacientes respecto a dolor de pecho o arterias 
+			bloqueadas para cada hoja.\pause  
+		\item En primer lugar, se analiza la rama verdadera (izquierda) del árbol de la figura 
+			\ref{fig:arbol3-2}.\pause
+		\item Observe que el número total de pacientes de esa rama es 164, de los cuales 37 
+			sufrieron ataque y 127 no lo sufrieron.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.4]{../../Libro ML/Decision Tree/notas/img/arbol3-4.pdf}
+			\caption{Separación de la rama izquierda del árbol de la figura \ref{fig:arbol3-2} mediante dolor de pecho.}
+			\label{fig:arbol3-4}
+		\end{figure}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Mediante esta separación hay 111 pacientes que sufren dolor de pecho de los cuales 13 
+			sufrieron ataque y 98 no, y hay 53 pacientes que no sufren dolor de pecho de los cuales 
+			24 sufrieron un ataque y 29 no. \pause
+		\item Los cálculos de la impureza para esta separación son los siguientes: \pause
+	\end{itemize}
+\begin{align*}
+	G_{Si} &= 1 - \left(\dfrac{13}{13+98}\right)^2 - \left(\dfrac{98}{13+98}\right)^2 = 0.2068\\
+	G_{No} &= 1 - \left(\dfrac{24}{24+29}\right)^2 - \left(\dfrac{29}{24+29}\right)^2 = 0.4955\\
+	G_{DP} &= \dfrac{13+98}{13+98+24+29}\times 0.2068 + \dfrac{24+29}{13+98+24+29}\times 0.4955\\
+	G_{DP} &= 0.3001
+\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Ahora se realiza la separación mediante arterias bloqueadas.\pause
+		\item Mediante esta separación de los 164 pacientes 49 padecen de arterias bloqueadas de los cuales 24 de ellos sufrieron 
+			ataque y 25 no\pause,
+		\item Mientras que de los 115 restantes que no padecen de arterias bloqueadas 13 sufrieron ataque y 102 no.\pause
+		\item Observe la figura \ref{fig:arbol3-5}.\pause
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.55]{../../Libro ML/Decision Tree/notas/img/arbol3-5.pdf}
+		\caption{Separación de la rama izquierda del árbol de la figura \ref{fig:arbol3-2} mediante arterias bloqueadas.}
+		\label{fig:arbol3-5}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	Los cálculos correspondientes son los siguientes:\pause
+	\begin{align}
+		\label{eq:impurezaABSi}
+		G_{Si} &= 1 - \left(\dfrac{24}{24+25}\right)^2 - \left(\dfrac{25}{24+25}\right)^2 = 0.4997\\
+		\label{eq:impurezaABNo}
+		G_{No} &= 1 - \left(\dfrac{13}{13+102}\right)^2 - \left(\dfrac{102}{13+102}\right)^2 = 0.2005\\
+		G_{AB} &= \dfrac{24+25}{24+25+13+102}\times 0.4997 + \dfrac{13+102}{24+25+13+102} = 0.2899\nonumber
+	\end{align}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Dado que $G_{AB}$ es menor que $G_{DP}$ se elige arterias bloqueadas para realizar la 
+			separación de los pacientes.\pause
+		\item De esta forma el árbol resultante hasta ahora se muestra en la figura \ref{fig:arbol3-6}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.4]{../../Libro ML/Decision Tree/notas/img/arbol3-6.pdf}
+		\caption{El árbol de decisión con sólo una rama separada mediante dos criterios.}
+		\label{fig:arbol3-6}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Ahora se debe evaluar el separar los pacientes en la rama izquierda del árbol de la figura \ref{fig:arbol3-6} 
+			mediante el dolor de pecho.\pause 
+		\item Esto se determina calculando la impureza mediante la separación a través del dolor de pecho\pause
+		\item Si esta impureza resulta menor que la obtenida al separar por arterias bloqueadas entonces se realiza\pause
+		\item Si no fuera menor entonces no se realiza la separación.\pause 
+		\item Recuerde que el objetivo al separar es obtener la menor impureza posible.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Considere que de los 49 pacientes que sufrieron de un ataque y padecen de arterias bloqueadas, 
+			se sabe que 20 padecen de dolor de pecho y 29 no.\pause
+		\item De los 20 que padecen de dolor de pecho 17 sufrieron un ataque y 3 no. \pause
+		\item Mientras que de los 29 que no padecen dolor de pecho 7 sufrieron un ataque y 22 no.\pause
+		\item La figura \ref{fig:arbol3-7} muestra esta clasificación.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{../../Libro ML/Decision Tree/notas/img/arbol3-7.pdf}
+		\caption{Separación de la rama izquierda afirmativa del árbol de la figura \ref{fig:arbol3-6} mediante dolor de pecho.}
+		\label{fig:arbol3-7}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	Los cálculos de la impureza de esta separación son los siguientes:\pause
+	\begin{align*}
+		G_{Si} &= 1 - \left(\dfrac{17}{17+3}\right)^2 - \left(\dfrac{3}{17+3}\right)^2 = 0.255\\
+		G_{No} &= 1 - \left(\dfrac{7}{7+22}\right)^2 - \left(\dfrac{22}{7+22}\right)^2 = 0.3662\\
+		G_{DP} &= \dfrac{17+3}{17+3+7+22}\times 0.255 + \dfrac{7+22}{17+3+7+22}\times 0.3662 = 0.3208
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item En este punto se debe decidir si los últimos nodos son terminales. \pause
+		\item Si la impureza $G_{DP}$ de la separación mediante dolor de pecho de la figura \ref{fig:arbol3-7} es menor 
+			que la impureza anterior $G$ calculada en \ref{eq:impurezaABSi} entonces se hace la separación, 
+			si no es menor entonces estos nodos son terminales. \pause 
+		\item Dado que $G_{DP}=0.3208$ es menor que $G_{Si}=0.4997$ de la expresión \ref{eq:impurezaABSi}, se realiza la separación.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Ahora se repiten los cálculos y la comparación con la impureza anterior para la rama negativa, 
+		es decir los pacientes que sufren de buena circulación pero no de arterias bloqueadas.\pause
+		\item De estos 115 pacientes 33 sufren de dolor de pecho y 82 no. \pause 
+		\item De los 33 que sufren dolor de pecho 7 tuvieron un ataque y 26 no\pause, 
+		\item Por otro lado, de los 82 que no sufren de dolor de pecho 6 tuvieron un ataque y 76 no.\pause
+		\item La figura \ref{fig:arbol3-8} muestra estos datos de la separación.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{../../Libro ML/Decision Tree/notas/img/arbol3-8.pdf}
+		\caption{Separación de la rama izquierda negativa del árbol de la figura \ref{fig:arbol3-6} mediante dolor de pecho.}
+		\label{fig:arbol3-8}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	Los cálculos de la impureza de esta separación son los siguientes:
+	\begin{align*}
+		G_{Si} &= 1 - \left(\dfrac{7}{7+26}\right)^2 - \left(\dfrac{26}{7+26}\right)^2 = 0.3342\\
+		G_{No} &= 1 - \left(\dfrac{6}{6+76}\right)^2 - \left(\dfrac{76}{6+76}\right)^2 = 0.1356\\
+		G_{DP} &= \dfrac{7+26}{7+26+6+76}\times 0.3342 + \dfrac{6+76}{7+26+6+76}\times 0.1356 = 0.1926
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item Dado que $G_{DP}$ es menor que la impureza anterior calculada en la expresión \ref{eq:impurezaABNo}, 
+			también se realiza la separación en esta rama.\pause
+		\item Por lo tanto, el árbol con las separaciones realizadas en su rama izquierda se muestra en la figura 
+			\ref{fig:arbol3-9}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{../../Libro ML/Decision Tree/notas/img/arbol3-9.pdf}
+		\caption{Separación completa de la rama izquierda del árbol.}
+		\label{fig:arbol3-9}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{itemize}
+		\item A continuación solo falta repetir el mismo procedimiento para la rama derecha del árbol de la figura \ref{fig:arbol3-9}, 
+			el caso en el que los pacientes no tienen buena circulación. \pause
+		\item Se debe calcular la impureza para dolor de pecho y arterias bloqueadas, decidir por la menor impureza y si conviene o no la separación por el criterio
+			correspondiente.\pause 
+		\item Realizando los cálculos restantes los cálculos, el árbol de decisión resultante se muestra en la figura \ref{fig:arbol3-10}. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo 3}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{../../Libro ML/Decision Tree/notas/img/arbol3-10.pdf}
+		\caption{Árbol de decisión final para el ejemplo de los pacientes del estudio de la tabla \ref{tab:datosPacientes}.}
+		\label{fig:arbol3-10}
+	\end{figure}
+\end{frame}
+
+\section{Bibliografía}
+\begin{frame}[allowframebreaks]{References}
+    \nocite{*}
+    \bibliographystyle{plain}
+    \bibliography{biblioDT}
+\end{frame}
+
+\end{document}

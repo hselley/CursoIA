@@ -1,0 +1,311 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+%\usetheme{Warsaw}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{algorithm,algorithmic}
+\author{Héctor Selley}
+\title{Modelos de mezclas Gaussianas}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+\institute{Universidad Anáhuac México} 
+\date{\today} 
+%\subject{} 
+
+\begin{document}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+\begin{frame}<beamer>
+\frametitle{Contenido}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+%\begin{frame}
+%	\tableofcontents
+%\end{frame}
+
+\section{Modelos de Mezclas Gaussianas}
+\begin{frame}{Introducción}
+\begin{itemize}
+	\item El modelo de mezclas gaussianas (GMM) es conocido como un algoritmo de aprendizaje no supervisado para clustering.\pause
+	\item Utiliza la función de distribución Gaussiana descrita por su media y varianza.\pause
+	\item El término ``mezclas'' implica que se utilizará más de una distribución Gaussiana.\pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.15]{img/1101.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es?}
+\begin{itemize}
+	\item Suponga que se tiene un conjunto de datos y se sabe que pertenecen a un número de modelos Gaussianos. \pause
+	\item El modelo se describe por la media y varianza para datos de 1 característica o por el vector media y el vector varianza para datos de $N$
+		características. \pause
+	\item Podríamos saber la probabilidad de que cada dato pertenezca a uno de los 2 modelos gaussianos si conocemos sus funciones de densidad.\pause
+	\item Luego, podemos asignar el dato al modelo específico con la mayor probabilidad entre la mezcla Gaussiana.\pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es?}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{img/1102.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{¿Qué es?}
+\begin{itemize}
+	\item Como se puede notar, hay dos cosas más importantes en el modelo de mezclas Gaussianas:\pause
+		\begin{enumerate}
+			\item Estimar los parámetros para cada componente Gaussiano dentro de la mezcla Gaussiana.\pause
+			\item Determinar a cual componente Gaussiano le corresponde algún dato.\pause
+		\end{enumerate}
+	\item Esta es la razón por la cual el clustering es una de las aplicaciones más importantes del modelo de mezclas Gaussianas pero la esencia 
+		del modelo de mezclas Gaussianas es la estimación de densidad.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es?}
+\begin{itemize}
+	\item Para estimar los parámetros que describen cada componente en el modelo de mezclas Gaussianas se utiliza un método llamado algoritmo 
+		Expectation-Maximization (EM).\pause
+	\item El algoritmo EM es ampliamente utilizado para la estimación de parámetros cuando un modelo depende de algunas variables latentes no 
+		observadas.\pause
+	\item Las variables latentes en el GMM son aquellas que describen a cual componente Gaussiano pertenece cada dato.\pause
+	\item Dado que sólo observamos los datos, esta es una variable latente no observada.
+\end{itemize}
+\end{frame}
+
+
+\section{¿Qué hace el algoritmo EM en el GMM?}
+\begin{frame}{¿Qué hace el algoritmo EM en el GMM?}
+\begin{itemize}
+	\item El algoritmo EM se utiliza para estimar los parámetros Gaussianos.\pause
+	\item Vayamos al inicio:\pause
+	\item Se debe entender una distribución Gaussiana antes de entender una mezcla de ellas.\pause
+	\item Supóngase que tiene una secuencia de datos y cada uno tiene una sola característica.\pause
+	\item Se puede graficar la densidad de los datos en un eje que represente esa característica.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+\pause Expliquemos este concepto a través de un ejemplo sencillo:\pause
+\begin{itemize}
+	\item Se tiene una cubeta con manzanas Gala.\pause
+	\item Se desea describir las manzanas Gala mediante su diámetro.\pause
+	\item Podría determinarse el promedio de los diámetros de las manzanas para describirlas.\pause
+	\item Pero en lugar de eso se desea la distribución completa de cada una de las manzanas. \pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.2]{img/1103.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Distribución Gaussiana}
+La gráfica de densidad puede ser descrita por la ecuación \ref{eq:gauss1}
+\begin{equation}
+	f(x) = \dfrac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+	\label{eq:gauss1}
+\end{equation}
+donde $\mu$ es la media y $\sigma$ es la desviación estándar, los cuales a su vez describen la distribución Gaussiana.
+\end{frame}
+
+\begin{frame}{Ejemplo}
+\begin{itemize}
+	\item Suponga que se tienen dos cubetas con manzanas, una cubeta con manzanas Gala y otra cubeta con manzanas Fuji.\pause
+	\item Accidentalmente se han mezclado las manzanas en las cubetas y no nos es posible distinguirlas fácilmente.\pause
+	\item Lo que si es posible hacer es medir el diámetro de las manzanas.\pause
+	\item Este criterio sería útil siempre y cuando las manzanas Fuji y Gala tengan una diferencia sustancial en su tamaño.\pause
+	\item El diámetro entonces sería una \textit{característica}.\pause
+	\item Si los diámetros de las manzanas son lo suficientemente diferentes de acuerdo a su tipo, seguirían entonces dos 
+		distribuciones Gaussianas diferentes.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Dos distribuciones Gaussianas}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{img/1104.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+En este caso, se separarían las manzanas de acuerdo a su diámetro.\pause
+\begin{enumerate}
+	\item Fuji: diametro$>2$ pulgadas
+	\item Gala: diametro$<2$ pulgadas\pause
+\end{enumerate}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{img/1105.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+\begin{itemize}
+	\item En la gráfica anterior, la línea negra representa la densidad observada de manzanas.\pause
+	\item Nótese que la densidad sugiere la ubicación de las Gaussianas.\pause
+	\item Si supiéramos la media y varianza para cada función de densidad, se podría obtener la probabilidad
+		de que una manzana pertenezca a algún tipo.\pause
+	\item Si algunas de las manzanas tuvieran una etiqueta indicando su tipo, se podría estimar la media y varianza 
+		de acuerdo a ello.\pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{img/1106.png}
+\end{figure}
+\end{frame}
+
+\section{Algoritmo EM}
+\begin{frame}{La idea del algoritmo EM}
+El algoritmo EM (Expectation-Maximization) consiste de dos procesos:\pause
+\begin{enumerate}
+	\item \textbf{Paso E}: Estima la variable latente, aquella variable clave que determina la clase a la que pertenece el dato. 
+		Esta variable latente influye en los datos pero no es observable.\pause
+	\item \textbf{Paso M}: Estima los parámetros de las distribuciones maximizando la probabilidad de los datos. La probabilidad
+		describe cuanto coincide un conjunto de parámetros con los datos para lo cuál se busca obtener el máximo (mayor coincidencia
+		con los datos, también llamado estimación de máxima verosimilitud).\pause
+\end{enumerate}
+Este algoritmo debe repetirse hasta conseguir una conjunto de parámetros adecuados para una separación también adecuada.
+\end{frame}
+
+\begin{frame}{De vuelta al ejemplo}
+\begin{itemize}
+	\item Considere que a las manzanas que no tiene una etiqueta se les asigna una de algún tipo de manera aleatoria.\pause
+	\item La idea es que dado que no es posible separar los datos, se hace una suposición del tipo para la inicialización.\pause
+	\item Este proceso de llama: \textbf{inicialización del algoritmo EM}.\pause
+	\item Ahora se lleva a cabo el paso E del algoritmo EM.\pause
+	\item A las manzanas con una etiqueta correcta Fuji se les asigna una probabilidad 1 de ser Fuji y probabilidad 0 de ser Gala.\pause
+	\item Viceversa para las manzanas Gala.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{De vuelta al ejemplo}
+\begin{itemize}
+	\item Si algún \textbf{paso M} hubiese ocurrido antes, habría que recalcular las probabilidades para las manzanas.\pause
+	\item Si alguna manzana Fuji tuviera una probabilidad mayor de ser Gala, se cambia la etiqueta.\pause
+	\item Viceversa para las manzanas Gala.\pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{img/1107.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{De vuelta al ejemplo}
+\begin{itemize}
+	\item Al realizar el \textbf{paso M}, se puede estimar los parámetros para la distribución del tipo de manzanas Fuji y Gala con las 
+		etiquetas correctas.\pause
+	\item Esto es, encontrar los parámetros que maximizan la probabilidad dadas las etiquetas de las manzanas.\pause
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{img/1108.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{De vuelta al ejemplo}
+\begin{itemize}
+	\item Ahora se deben repetir los pasos E y M una y otra vez hasta que no haya cambios en la asignación de tipo de manzana.\pause
+	\item Esto es, hasta que el cambio en la función de probabilidad sea muy pequeño.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Consideraciones para una buena ejecución}
+\begin{itemize}
+	\item Considere un proceso de etiquetado inicial completamente aleatorio.\pause
+	\item Teóricamente no está garantizado que cada inicialización aleatoria ocasione el mismo resultado del algoritmo EM para GMM.\pause
+	\item El proceso mejorará si se tienen manzanas correctamente etiquetadas.\pause
+	\item ¿Qué ocurre si las manzanas no difieren mucho en su tamaño de acuerdo a su tipo?\pause
+	\item En ese caso no se podría hacer una separación apropiada.\pause
+	\item Por ello se puede considerar tener más características de las manzanas, por ejemplo: sabor, olor o color.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Dos características}
+\begin{itemize}
+	\item En el caso de que se tengan dos características, las distribuciones Gaussianas 2-D se pueden visualizar como una elipse en el 
+		espacio de características.\pause
+	\item La figura muestra el proceso del algoritmo EM para un modelo de mezclas Gaussianas con 3 componentes Gaussianas.\pause
+	\item Siguiendo con las manzanas, sería la tarea de separar manzanas Fuji, Gala y Honeycrisp de acuerdo a las características tamaño 
+		y sabor.
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{img/1109.png}
+\end{figure}
+\end{frame}
+
+\section{Definición del GMM}
+\begin{frame}{Mezcla Gaussiana}
+\begin{block}{Mezcla Gaussiana}
+Una mezcla Gaussiana es una función compuesta de un conjunto de Gaussianas, cada una identificada por $k\in\left\lbrace 1,2,\dots,K\right\rbrace$,
+donde $K$ es el número de clusters de los datos.
+\end{block}\pause
+Cada Gaussiana $k$ en la mezcla está compuesta de los siguientes parámetros:\pause
+\begin{itemize}
+	\item La media $\mu$ que define su centro.\pause
+	\item La covarianza $\Sigma$ que define su ancho. Esta sería equivalente a las dimensiones de la elipsoide en un caso multivariado.\pause
+	\item La probabilidad de mezcla $\pi$ que define cuan pequeña o grande será la función Gaussiana.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Mezcla Gaussiana}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{img/1110.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Mezcla Gaussiana}
+Los coeficientes de mezcla son probabilidades que deben satisfacer la condición:
+\begin{equation}
+	\sum_{k=1}^K \pi_k = \pi_1 + \pi_2 + \pi_3 + \cdots + \pi_K = 1
+\end{equation}
+Para determinar los valores óptimos, se debe asegurar que cada Gaussiana cubra todos los datos del cluster correspondiente. Esto es lo que 
+maximizar la probabilidad (semejanza) hace.
+\end{frame}
+
+\begin{frame}{Función de densidad Gaussiana}
+La función de densidad Gaussiana está dada por:
+\begin{equation}
+	N(\textbf{x}|\mu,\Sigma) = \dfrac{1}{(2\pi)^{D/2}|\Sigma|^{1/2}}\exp\left(-\dfrac{1}{2}(\textbf{x}-\mu)^T\Sigma^{-1}(\textbf{x}-\mu) \right)
+	\label{eq:GMM1}
+\end{equation}
+donde $x$ representa los datos, $D$ es el número de dimensiones para cada punto, $\mu$ es la media y $\Sigma$ la covarianza.
+\end{frame}
+
+\begin{frame}{Función de densidad Gaussiana}
+Si se tiene un conjunto de datos compuesto de $N=1000$ puntos en tres dimensiones ($D=3$), entonces $\textbf{x}$ sería una matriz $1000\times 3$,
+$\mu$ sería un vector $1\times 3$ y $\Sigma$ sería una matriz $3\times 3$. Si se aplica la función logaritmo a la ecuación (\ref{eq:GMM1}) se tiene:
+\begin{equation}
+	\ln N(\textbf{x}|\mu,\Sigma) = -\dfrac{D}{2}\ln 2\pi - \dfrac{1}{2}\ln\Sigma - \dfrac{1}{2}(\textbf{x}-\mu)^T\Sigma^{-1}(\textbf{x}-\mu)
+\end{equation}
+Si se deriva esta expresión con respecto a $\mu$ y $\Sigma$, y se iguala a cero entonces se puede obtener los valores óptimos para esos parámetros. 
+La solución corresponderá a la Estimación Máxima de Semejanza (MLE).
+\end{frame}
+
+\end{document}
+
+https://towardsdatascience.com/gaussian-mixture-models-explained-6986aaf5a95
+  
+
