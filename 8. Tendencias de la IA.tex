@@ -1,0 +1,156 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{Boadilla}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{algorithm,algorithmic}
+\author{Héctor Selley}
+\title{Tendencias de la IA}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+\institute{Universidad Anáhuac México} 
+\date{\today} 
+%\subject{} 
+\begin{document}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+\begin{frame}<beamer>
+\frametitle{Contenido}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+%\begin{frame}
+%	\tableofcontents
+%\end{frame}
+
+\section{Tendencias}
+\begin{frame}{Tendencias}
+	Algunas de las tendencias de la IA hasta Septiembre del 2021 son:
+	\begin{itemize}
+		\item \textbf{Aprendizaje profundo (Deep Learning)}: El aprendizaje profundo ha sido una tendencia dominante en la IA 
+			en los últimos años y es probable que continúe siéndolo. Los modelos de aprendizaje profundo, como las redes 
+			neuronales profundas, han demostrado un gran éxito en tareas como el reconocimiento de imágenes, el procesamiento 
+			del lenguaje natural y la generación de contenido.\pause
+		\item \textbf{IA explicable y ética}: Con el crecimiento de la IA, ha surgido una mayor preocupación por la transparencia, 
+			la ética y la explicabilidad de los sistemas de IA. Existe una creciente demanda de algoritmos y modelos que sean 
+			comprensibles y que puedan explicar el razonamiento detrás de sus decisiones.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Tendencias}
+	\begin{itemize}
+		\item \textbf{Inteligencia artificial en la atención médica}: La IA tiene un gran potencial para revolucionar la atención 
+			médica. Se espera que se utilice para el diagnóstico médico, la interpretación de imágenes médicas, el descubrimiento 
+			de medicamentos y la atención personalizada. La capacidad de los modelos de IA para analizar grandes cantidades de datos 
+			y encontrar patrones puede mejorar significativamente la precisión y la eficiencia de los diagnósticos y tratamientos 
+			médicos.\pause
+		\item \textbf{IA en vehículos autónomos}: Los vehículos autónomos continúan siendo una tendencia en el campo de la IA 
+			y la industria automotriz. La IA se utiliza para desarrollar sistemas de detección, reconocimiento y toma de decisiones 
+			en vehículos sin conductor, con el objetivo de mejorar la seguridad vial y la eficiencia del transporte.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Tendencias}
+	\begin{itemize}
+		\item \textbf{IA en el procesamiento del lenguaje natural (NLP)}: El procesamiento del lenguaje natural es un área de rápido 
+			crecimiento en la IA. Se espera que los modelos de lenguaje generativos, como los basados en GPT, mejoren en su capacidad 
+			para entender y generar texto de manera más coherente y contextualmente relevante.\pause
+		\item \textbf{Robótica y automatización}: La IA se utiliza cada vez más en aplicaciones robóticas y de automatización. 
+			Los robots y sistemas automatizados están siendo diseñados para realizar tareas complejas y adaptativas en entornos 
+			diversos, lo que puede aumentar la eficiencia y la productividad en una amplia gama de industrias.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Tendencias}
+	\begin{itemize}
+		\item \textbf{Privacidad y seguridad en la IA}: Con el aumento en la cantidad de datos utilizados en aplicaciones de IA, 
+			la privacidad y la seguridad de esos datos se han convertido en preocupaciones importantes. Se espera que se desarrollen 
+			nuevas técnicas de privacidad y métodos de protección de datos para abordar estas preocupaciones.\pause
+	\end{itemize}
+	El campo de la IA es altamente dinámico y en constante evolución, por lo que es indispensable mantenerse actualizado de las nuevas
+	aplicaciones.
+\end{frame}
+
+\section{ChatGPT}
+\begin{frame}{Caso especial: ChatGPT}
+	\begin{block}{ChatGPT}
+		Es un modelo de lenguaje basado en la arquitectura GPT (Generative Pre-trained Transformer), desarrollado por 
+		OpenAI\footnotemark. Es un 
+		modelo de aprendizaje automático que utiliza redes neuronales para generar respuestas a partir de las entradas de texto que recibe.	
+	\end{block}
+	\footnotetext{\url{https://chat.openai.com/}}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona?}
+	ChatGPT esta compuesto por cuatro grandes módulos.
+	\begin{enumerate}
+		\item Arquitectura Transformer\pause
+		\item Entrenamiento pre-entrenado\pause
+		\item Afinamiento específico\pause
+		\item Generación de respuestas
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Arquitectura Transformer}
+	\textbf{Arquitectura Transformer}
+	\begin{itemize}
+		\item ChatGPT se basa en la arquitectura Transformer, que es una red neuronal de aprendizaje 
+			profundo diseñada para procesar secuencias de texto. \pause
+		\item Esta arquitectura se compone de múltiples capas de atención y feed-forward, \pause
+		\item lo que permite capturar las relaciones entre las palabras y comprender el contexto en 
+			el que se encuentra cada palabra.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Entrenamiento pre-entrenado}
+	\textbf{Entrenamiento pre-entrenado}
+	\begin{itemize}
+		\item ChatGPT es entrenado utilizando un proceso de pre-entrenamiento y afinamiento.\pause 
+		\item En el pre-entrenamiento, se alimenta al modelo grandes cantidades de texto de diversas fuentes de Internet.\pause 
+		\item El modelo trata de predecir la siguiente palabra en una oración dada la información anterior. \pause 
+		Este proceso permite que el modelo aprenda patrones y estructuras lingüísticas.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Afinamiento específico}
+	\textbf{Afinamiento específico}
+	\begin{itemize}
+		\item Después del pre-entrenamiento, el modelo se ajusta o "afina" utilizando datos de entrenamiento 
+			específicos para la tarea deseada.\pause
+		\item En el caso de ChatGPT, se utiliza un conjunto de datos donde se muestra una conversación 
+			y las respuestas correspondientes. \pause 
+		\item Durante el afinamiento, el modelo aprende a generar respuestas relevantes y coherentes 
+			basadas en el contexto.\pause
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Generación de respuestas}
+	\textbf{Generación de respuestas}
+	\begin{itemize}
+		\item Una vez que ChatGPT está entrenado, se puede utilizar para generar respuestas a partir de
+			las entradas de texto proporcionadas.\pause 
+		\item Cuando se le presenta un mensaje, el modelo procesa el texto y lo utiliza como contexto 
+			para generar una respuesta adecuada. \pause 
+		\item La respuesta se genera de manera probabilística, tomando en cuenta el contexto anterior 
+			y el conocimiento adquirido durante el entrenamiento.
+	\end{itemize}
+\end{frame}	
+
+\end{document}
