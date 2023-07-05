@@ -12,6 +12,7 @@
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{algorithm,algorithmic}
+\usepackage{tikz}
 \author{Héctor Selley}
 \title{Redes neuronales}
 \providecommand{\tightlist}{%
@@ -45,7 +46,19 @@
 	\begin{itemize}
 		\item Las redes neuronales son modelos computacionales inspirados en el funcionamiento del cerebro humano. \pause
 		\item Se componen de unidades de procesamiento llamadas neuronas artificiales o nodos, que se organizan en 
-			capas y se conectan entre sí mediante conexiones ponderadas.
+			capas y se conectan entre sí mediante conexiones ponderadas.\pause
+		\item Las redes neuronales tratan de imitan el funcionamiento de las redes neuronales de los organismos vivos:
+			 un conjunto de neuronas conectadas entre sí y que trabajan en conjunto, sin que haya una tarea concreta para cada una.\pause
+		\item Con la experiencia, las neuronas van creando y reforzando ciertas conexiones para \textit{aprender} algo que se queda fijo en el tejido.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué son las Redes Neuronales?}
+	\begin{itemize}
+		\item Se basan en una idea sencilla: dados unos parámetros hay una forma de combinarlos para predecir un cierto resultado.\pause
+		\item Las redes neuronales son un modelo para encontrar esa combinación de parámetros y aplicarla al mismo tiempo. \pause 
+		\item Esto es, encontrar la combinación que mejor se ajusta es \textit{entrenar} la red neuronal. \pause 
+		\item Una red ya entrenada se puede usar luego para hacer predicciones o clasificaciones, es decir, para \textit{aplicar} la combinación.
 	\end{itemize}
 \end{frame}
 
@@ -64,7 +77,7 @@
 	\begin{itemize}
 		\item Las redes neuronales funcionan mediante la interconexión de unidades de procesamiento llamadas neuronas artificiales o nodos.\pause
 		\item Cada neurona artificial toma una o más entradas, realiza un cálculo utilizando una función de activación y produce una salida.\pause
-		\item El proceso general de cómo funcionan las redes neuronales es el siguiente:\pause
+		\item El proceso general de cómo funcionan las redes neuronales es el siguiente:
 	\end{itemize}
 \end{frame}
 
@@ -106,6 +119,137 @@
 	\end{enumerate}
 	Este proceso de propagación hacia adelante, retropropagación y ajuste de pesos se repite iterativamente durante el entrenamiento de la red 
 	neuronal para que pueda aprender a realizar tareas específicas, como clasificación, regresión u otras tareas de aprendizaje automático.
+\end{frame}
+
+\section{Ejemplo}
+\begin{frame}{Ejemplo}
+	\begin{itemize}
+		\item Supongamos que usted es alumno de una clase en la que el profesor no ha dicho exactamente cómo va a evaluar.\pause 
+		\item Para empezar, supongamos que sólo ha realizado dos exámenes y tiene la nota de cada uno de ellos y la final.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.5]{img/rn01.png}
+		\caption{La unidad básica de la red neuronal: el perceptrón. Entradas $n_1$ y $n_2$ con peso $w_1$ y $w_2$ respectivamente. 
+		La salida $n_f$ es 0 ó 1.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+	\begin{itemize}
+		\item ¿Cómo usamos una red neuronal para saber cuánto vale cada examen?\pause 
+		\item Aquí nos bastará con la unidad fundamental de la red neuronal: \textbf{el perceptrón}.\pause  
+		\item Un perceptrón es un elemento que tiene varias entradas con un cierto peso cada una.\pause  
+		\item Si la suma de esas entradas por cada peso es mayor que un determinado número, la salida del perceptrón es un uno.\pause 
+		\item Si es menor, la salida es un cero.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+	\begin{itemize}
+		\item En el ejemplo, las entradas serían las dos notas de los exámenes. \pause 
+		\item Si la salida es uno (esto es, la suma de las notas por su peso correspondiente es mayor que cinco), es un aprobado. \pause
+		\item Si es cero, no aprobado. 
+	\end{itemize}
+	\begin{align*}
+		n_1w_1 + n_2w_2 \geq 6  \Rightarrow  n_f=1 \\
+		n_1w_1 + n_2w_2 < 6  \Rightarrow n_f=0 
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+	\begin{itemize}
+		\item Los pesos $w_1$ y $w_2$ son lo que tenemos que encontrar con el entrenamiento.\pause
+		\item El entrenamiento consistirá en empezar con dos pesos aleatorios ($w_1+w_2=1$) y ver qué resultado da la red neuronal para cada alumno.\pause
+		\item También se podría comenzar con puede ser también comenzar con $w_1=w_2=0.5$.\pause 
+		\item Si falla en algún caso, se debe ajustar los pesos gradualmente hasta que se obtenga el resultado esperado.\pause
+		\item La idea del ajuste o retroalimentación es adaptar la red a la información \textit{oculta} que tienen los datos (interpretación) 
+			para que la neurona aprenda.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}
+	\begin{itemize}
+		\item Si ahora fueran tres exámenes se necesitarían tres nodos de entrada\pause
+		\item Si se desean más resultados, se pueden tener tantos perceptrones como salidas se requieran\pause
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.65]{img/rn02.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo - Redes multicapa}
+	\begin{itemize}
+		\item Suponga ahora que dos alumnos tienen la misma nota en los exámenes, dos dieces.\pause
+		\item Uno de los alumnos tiene un 7 en un trabajo y el otro alumno tiene 4.\pause
+		\item El primer estudiante aprobó el curso y el segundo no lo aprobó.\pause
+		\item Otro alumno tiene un 10 en el trabajo y 4.99 en los dos exámenes y no aprobó.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo - Redes multicapa}
+	\begin{itemize}
+		\item Se puede entrenar una red neuronal con los datos anteriores\pause
+		\item Para que la red funcione bien se necesita otro perceptrón intermedio que determine si el 
+		trabajo fue aprobado o no aprobado.\pause
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.6]{img/rn03.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Ejemplo - Redes multicapa}
+	\begin{itemize}
+		\item El primer perceptrón determina si la nota multiplicada por $-1$ es mayor que cinco (esto es, si
+			la nota es mayor que 5).\pause
+		\item Si así lo es, entonces la salida del perceptrón es 1.\pause
+		\item Esta es una red neuronal con dos perceptrones y dos capas.\pause
+		\item Lo que se ha logrado con las dos capas es añadir información que no estaba antes.\pause
+		\item Lo que se suele hacer es poner varias con varios nodos, cada uno conectado a todas las entradas anteriores.\pause
+		\item Durante el proceso de aprendizaje, cada capa \textit{aprende} a encontrar y detectar las características 
+			que mejor ayudan a clasificar los datos.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo - Sigmoide}
+	\begin{itemize}
+		\item Si las condiciones en la red neuronal se complican, es posible que los perceptrones ya no sean 
+			suficientes.\pause
+		\item Para esos casos se puede usar una función más suave, como la \textbf{sigmoide}.\pause
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.6]{img/rn04.png}
+		\caption[short]{En rojo, la función escalón. En azul, la sigmoide, una aproximación más suave.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Redes convolucionales}
+	\begin{itemize}
+		\item Las redes convolucionales funcionan muy bien en reconocimiento de voz y procesamiento de imágenes. \pause
+		\item En una red neuronal se pone una neurona para cada píxel de una imagen\pause 
+		\item También se ponen varias capas con varias neuronas, todas conectadas entre sí. \pause
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.5]{img/rn05.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Redes convolucionales}
+	\begin{itemize}
+		\item La idea de las redes convolucionales es tratar de buscar características locales en pequeños 
+			grupos de entradas\pause
+		\item Se utiliza un mismo grupo de neuronas por cada grupo de entradas \pause
+		\item Por ejemplo, un cuadrado de 3x3 píxeles en una imagen o una secuencia de 4 mediciones en un 
+			archivo de sonido \pause
+		\item Todos los elementos en la capa, llamada \textbf{capa de convolución}, tienen los mismos pesos 
+			por cada entrada.\pause
+		\item Mientras más capas hayan, la red neuronal podrá descubrir más y más complejas características 
+			de la imagen.
+	\end{itemize}
 \end{frame}
 
 \section{Entrenamiento de una RN}

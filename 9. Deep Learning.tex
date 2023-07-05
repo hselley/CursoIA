@@ -40,31 +40,162 @@
 %	\tableofcontents
 %\end{frame}
 
-\section{Deep Learning}
-\begin{frame}{Deep Learning}
-\begin{itemize}
-	\item Es un método específico de machine learning que incorpora las redes neuronales en capas sucesivas para aprender de los datos de
-		manera iterativa.\pause
-	\item El deep learning es especialmente útil cuando se trata de aprender patrones de datos no estructurados.\pause
-	\item Las redes neuronales complejas de deep learning están diseñadas para emular cómo funciona el cerebro humano, así que las computadoras 
-		pueden ser entrenadas para lidiar con abstracciones y problemas mal definidos.\pause
-	\item Las redes neuronales y el deep learning se utilizan a menudo en el reconocimiento de imágenes, voz y aplicaciones de visión de computadora.
-\end{itemize}
+\section{¿Qué es Deep Learning?}
+\begin{frame}{¿Qué es Deep Learning?}
+	\begin{itemize}
+		\item El Deep Learning, también conocido como aprendizaje profundo, es una subrama del campo del aprendizaje automático (Machine Learning)\pause
+	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{../Programacion para ML/Contenido/img/AI-ML-DL.png} %img/AI-ML-DL.png
+	\end{figure}
 \end{frame}
 
-\begin{frame}{Deep Learning}
-\begin{itemize}
-	\item Las redes neuronales profundas tienen un enorme potencial para aprender funciones, patrones y representaciones no lineales complejas.\pause
-	\item Su poder está impulsando la investigación en múltiples campos, incluida la visión por computadora, el análisis audiovisual, los chatbots 
-		y la comprensión del lenguaje natural, por nombrar algunos.
-\end{itemize}
+\begin{frame}{¿Qué es Deep Learning?}
+	\begin{itemize}
+		\item Se enfoca en entrenar y utilizar redes neuronales artificiales profundas.\pause 
+		\item Estas redes neuronales están compuestas por múltiples capas ocultas, lo que les permite aprender y representar de manera jerárquica 
+			características y patrones cada vez más abstractos en los datos.\pause
+		\item A diferencia de las redes neuronales tradicionales, que suelen tener una o dos capas ocultas, las redes neuronales profundas pueden 
+			tener muchas capas ocultas\pause 
+		\item Esto que les brinda una mayor capacidad de representación y un mayor poder de aprendizaje. \pause 
+		\item Cada capa en una red neuronal profunda realiza transformaciones no lineales en los datos de entrada y pasa la información 
+			a la siguiente capa.
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{Deep Learning}
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.35]{../Programacion para ML/Contenido/img/AI-ML-DL.png} %img/AI-ML-DL.png
-\end{figure}
+\begin{frame}{¿Qué es Deep Learning?}
+	\begin{itemize}
+		\item El Deep Learning ha ganado popularidad y ha logrado avances significativos en áreas como: \pause
+			\begin{itemize}
+				\item Reconocimiento de imágenes\pause
+				\item Procesamiento del lenguaje natural\pause
+				\item Visión por computadora\pause
+				\item Traducción automática\pause
+				\item Entre otros. \pause
+			\end{itemize} 
+			
+		\item Esto se debe a su capacidad para aprender automáticamente características y representaciones relevantes a partir de grandes 
+			cantidades de datos, sin requerir una extracción manual de características.
+	\end{itemize}
 \end{frame}
+
+\begin{frame}{¿Qué es Deep Learning?}
+	\begin{itemize}
+		\item Una de las razones clave detrás del éxito del Deep Learning es el uso de algoritmos de optimización y el desarrollo de 
+			arquitecturas especializadas, como:\pause
+			\begin{itemize}
+				\item Redes neuronales convolucionales (CNN) para el procesamiento de imágenes \pause
+				\item Redes neuronales recurrentes (RNN) para el procesamiento de secuencias.\pause 
+			\end{itemize} 
+		\item Estas arquitecturas se han diseñado específicamente para abordar los desafíos inherentes a diferentes tipos de datos 
+			y han demostrado un rendimiento sobresaliente en muchas tareas de aprendizaje automático.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es Deep Learning?}
+	\begin{itemize}
+		\item El Deep Learning ha impulsado avances significativos en áreas como: \pause 
+			\begin{itemize}
+				\item Visión artificial\pause 
+				\item Procesamiento del lenguaje natural \pause
+				\item Generación de imágenes y texto \pause
+				\item Conducción autónoma \pause
+				\item Medicina \pause 
+				\item Biología \pause 
+				\item Entre muchos otros campos.\pause 
+			\end{itemize} 
+		\item Su capacidad para aprender características y patrones complejos y realizar tareas sofisticadas ha llevado a su amplia 
+			adopción en la comunidad científica y la industria.
+	\end{itemize}
+\end{frame}
+
+\section{¿Cómo funciona el Deep Learning?}
+\begin{frame}{¿Cómo funciona el Deep Learning?}
+	\begin{itemize}
+		\item El proceso de construcción del Deep Learning implica varias etapas clave.\pause 
+		\item A continuación, se describen los pasos generales involucrados:
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Deep Learning?}
+	\begin{enumerate}
+		\item \textbf{Definir el problema}:\pause Comienza identificando y definiendo claramente el problema que deseas resolver utilizando Deep Learning. \pause
+			Esto implica comprender qué tipo de datos tienes, qué tipo de tarea deseas realizar (clasificación, regresión, generación, etc.) 
+			y cuáles son los objetivos específicos del proyecto.\pause
+		\item \textbf{Recopilar y preparar los datos}: Reúne los datos necesarios para entrenar y evaluar el modelo de Deep Learning.\pause 
+			Estos datos deben ser representativos del problema que deseas resolver y deben estar debidamente etiquetados o anotados.\pause 
+			Además, realiza una preparación de datos adecuada, que puede incluir la limpieza de datos, la normalización y la división en 
+			conjuntos de entrenamiento, validación y prueba.\pause
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Deep Learning?}
+	\begin{enumerate}
+		\setcounter{enumi}{2}
+		\item \textbf{Diseñar la arquitectura del modelo}: Selecciona la arquitectura apropiada para tu problema.\pause Esto implica determinar 
+			el tipo de red neuronal (redes neuronales convolucionales, redes neuronales recurrentes, redes neuronales generativas, etc.) 
+			y diseñar la estructura de capas, incluyendo el número de capas ocultas, la cantidad de neuronas en cada capa y la elección 
+			de funciones de activación.\pause
+		\item \textbf{Inicializar el modelo}: Inicializa los parámetros del modelo, como los pesos de las conexiones, de manera aleatoria 
+			o utilizando algún enfoque de inicialización específico.\pause Esto establece el punto de partida para el proceso de entrenamiento.
+	\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{¿Cómo funciona el Deep Learning?}
+	\begin{enumerate}
+		\setcounter{enumi}{4}
+		\item \textbf{Entrenar el modelo}: Utiliza los datos de entrenamiento para ajustar los pesos y los parámetros del modelo.\pause 
+			Esto implica alimentar los datos a la red neuronal, realizar la propagación hacia adelante (forward propagation) para calcular las salidas, 
+			calcular la pérdida (loss) o el error, y luego realizar la propagación hacia atrás (backpropagation) 
+			para actualizar los pesos a través de algoritmos de optimización, como el descenso del gradiente, con el objetivo de minimizar la pérdida.
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Deep Learning?}
+	\begin{enumerate}
+		\setcounter{enumi}{5}
+		\item \textbf{Ajustar hiperparámetros}: Los hiperparámetros, como la tasa de aprendizaje, el tamaño del lote (batch size), el número de 
+			épocas, etc., afectan el rendimiento del modelo.\pause Realiza experimentos y ajusta estos hiperparámetros para optimizar el rendimiento 
+			del modelo en el conjunto de datos de validación.\pause
+		\item \textbf{Evaluar y afinar el modelo}: Evalúa el rendimiento del modelo utilizando el conjunto de datos de prueba o datos no vistos.\pause 
+			Analiza métricas de rendimiento relevantes y realiza ajustes adicionales en la arquitectura del modelo o en los hiperparámetros según 
+			sea necesario.
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Deep Learning?}
+	\begin{enumerate}
+		\setcounter{enumi}{7}
+		\item \textbf{Despliegue y predicción}: Una vez que estás satisfecho con el rendimiento del modelo, puedes implementarlo en producción y 
+			utilizarlo para realizar predicciones en datos nuevos y no vistos.\pause
+	\end{enumerate}
+	\begin{itemize}
+		\item Es importante tener en cuenta que el proceso de construcción del Deep Learning es iterativo y requiere experimentación, ajustes 
+			y refinamientos para lograr un modelo óptimo. \pause
+		\item Además, también es fundamental contar con un conjunto de datos de calidad y suficiente capacidad computacional para entrenar 
+			modelos de Deep Learning de manera eficiente.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{¿Cómo funciona el Deep Learning?}
+	
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
